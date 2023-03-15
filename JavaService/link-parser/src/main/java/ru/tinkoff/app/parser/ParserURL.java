@@ -1,8 +1,8 @@
 package ru.tinkoff.app.parser;
 
-import java.util.Map;
-import java.util.Optional;
+import ru.tinkoff.app.url.UrlData;
 
-public sealed interface ParserURL permits ParserGutHubURL, ParserStackOverflow {
-    Optional<Map<String, String>> parseUrl(String url);
+
+public sealed interface ParserURL permits ParserGitHubURL, ParserStackOverflow {
+    UrlData parseUrl(String url);
 }

@@ -1,29 +1,24 @@
 package ru.tinkoff.app.parser;
 
-import org.springframework.stereotype.Component;
+import ru.tinkoff.app.url.UrlData;
+import ru.tinkoff.app.url.UrlDataStackOverflow;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-@Component
 public final class ParserStackOverflow implements ParserURL {
 
     @Override
-    public Optional<Map<String, String>> parseUrl(String url) {
+    public UrlData parseUrl(String url) {
         String[] args = url.split("/");
-        Map<String, String> map = new HashMap<>();
-        Optional<Map<String, String>> optional = Optional.empty();
-        if (args.length > 4 && args[2].equals("stackoverflow.com") && args[3].equals("questions")) {
+        String nameArgs3 = "questions";
+        String typeUrl = "stackoverflow.com";
+        if (args.length > 4 && args[2].equals(typeUrl) && args[3].equals(nameArgs3)) {
             try {
-                Integer.parseInt(args[4]);
-                map.put("type", "stackoverflow");
-                map.put("id", args[4]);
-                optional = Optional.of(map);
+                Integer id = Integer.parseInt(args[4]);
+                return new UrlDataStackOverflow(typeUrl, id);
             } catch (NumberFormatException e) {
                 // Bad url
+                return null;
             }
         }
-        return optional;
+        return null;
     }
 }
