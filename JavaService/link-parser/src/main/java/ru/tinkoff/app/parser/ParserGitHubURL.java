@@ -5,12 +5,12 @@ import ru.tinkoff.app.url.UrlDataGitHub;
 
 public final class ParserGitHubURL implements ParserURL {
 
+    private final String TYPE_Url = "github.com";
     @Override
     public UrlData parseUrl(String url) {
         String[] args = url.split("/");
-        String typeUrl = "github.com";
-        if (args.length > 4 && args[2].equals(typeUrl)) {
-            return new UrlDataGitHub(typeUrl, args[3], args[4]);
+        if (args.length > 4 && args[2].equals(TYPE_Url)) {
+            return new UrlDataGitHub(TYPE_Url, args[3], args[4]);
         }
         return null;
     }
