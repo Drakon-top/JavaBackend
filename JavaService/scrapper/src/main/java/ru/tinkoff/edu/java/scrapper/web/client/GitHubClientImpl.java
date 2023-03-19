@@ -1,0 +1,22 @@
+package ru.tinkoff.edu.java.scrapper.web.client;
+
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
+import ru.tinkoff.edu.java.scrapper.web.dto.GitHubRepositoryResponse;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.stereotype.Service;
+
+import java.beans.ConstructorProperties;
+
+public class GitHubClientImpl implements GitHubClient {
+
+    private final String BASE_URL = "https://api.github.com";
+
+    @Override
+    public Mono<GitHubRepositoryResponse> fetchInfoRepository(String userName, String repo) {
+        WebClient webClient = WebClient.create(BASE_URL);
+        return webClient.get().uri(uriBuilder -> uriBuilder.path("/{user_name}/{repos}").build(userName, repo))
+                .retrieve().bodyToMono(GitHubRepositoryResponse.class);
+    }
+}
