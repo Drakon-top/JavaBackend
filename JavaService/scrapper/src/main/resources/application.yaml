@@ -4,3 +4,5 @@ springdoc:
 
 app:
   test="test_key_spring_13qk2kw!":
+  scheduler:
+    interval: 10000
