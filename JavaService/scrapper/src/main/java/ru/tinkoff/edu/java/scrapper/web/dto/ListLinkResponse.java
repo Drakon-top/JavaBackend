@@ -1,4 +1,4 @@
-package ru.tinkoff.web.dto;
+package ru.tinkoff.edu.java.scrapper.web.dto;
 
 import java.util.List;
 

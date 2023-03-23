@@ -3,6 +3,6 @@ springdoc:
     path: /swagger-ui
 
 app:
-  test="test_key_spring_13qk2kw!":
+  test: test_key_spring_13qk2kw!
   scheduler:
     interval: 10000

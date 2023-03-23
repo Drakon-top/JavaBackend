@@ -1,9 +1,10 @@
-package ru.tinkoff.web.controller;
+package ru.tinkoff.edu.java.scrapper.web.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.tinkoff.web.dto.AddLinkRequest;
-import ru.tinkoff.web.dto.ListLinkResponse;
-import ru.tinkoff.web.dto.RemoteLinkResponse;
+import ru.tinkoff.edu.java.scrapper.web.dto.AddLinkRequest;
+import ru.tinkoff.edu.java.scrapper.web.dto.ListLinkResponse;
+import ru.tinkoff.edu.java.scrapper.web.dto.RemoteLinkResponse;
+
 
 @RestControllerAdvice
 public class LinksController {
