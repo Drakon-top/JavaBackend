@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LinkUpdaterScheduler {
-    static final Logger log =
+    private static final Logger log =
             LoggerFactory.getLogger(LinkUpdaterScheduler.class);
 
     @Scheduled(fixedDelayString = "#{schedulerIntervalMs}")

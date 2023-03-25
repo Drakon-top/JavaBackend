@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.bot.configuration;
+package ru.tinkoff.edu.java.bot.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -12,17 +12,17 @@ import ru.tinkoff.edu.java.scrapper.web.client.StackOverflowClientImpl;
 public class ClientConfiguration {
 
     @Bean
-    GitHubClient getGitHubClient() {
+    public GitHubClient getGitHubClient() {
         return new GitHubClientImpl();
     }
 
     @Bean
-    StackOverflowClient getStackOverflowClient() {
+    public StackOverflowClient getStackOverflowClient() {
         return new StackOverflowClientImpl();
     }
 
     @Bean
-    long schedulerIntervalMs(ApplicationConfig config) {
+    public long schedulerIntervalMs(ApplicationConfig config) {
         return config.scheduler().interval().toMillis();
     }
 }
