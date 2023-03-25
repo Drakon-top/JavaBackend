@@ -20,4 +20,9 @@ public class ClientConfiguration {
     StackOverflowClient getStackOverflowClient() {
         return new StackOverflowClientImpl();
     }
+
+    @Bean
+    long schedulerIntervalMs(ApplicationConfig config) {
+        return config.scheduler().interval().toMillis();
+    }
 }

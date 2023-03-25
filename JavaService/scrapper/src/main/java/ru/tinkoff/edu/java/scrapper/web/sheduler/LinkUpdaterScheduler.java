@@ -10,7 +10,7 @@ public class LinkUpdaterScheduler {
     static final Logger log =
             LoggerFactory.getLogger(LinkUpdaterScheduler.class);
 
-    @Scheduled(fixedDelayString = "${app.scheduler.interval}")
+    @Scheduled(fixedDelayString = "#{schedulerIntervalMs}")
     public void update() {
         log.info("Update info about urls");
     }
