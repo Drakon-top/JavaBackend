@@ -1,1 +1,3 @@
-app.test="test_key_spring_13qk2kw!"
+app:
+  test: "test_key_spring_13qk2kw!"
+  bottoken: ${BOT_TOKEN}

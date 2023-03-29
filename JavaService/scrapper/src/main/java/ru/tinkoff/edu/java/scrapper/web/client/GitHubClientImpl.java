@@ -22,7 +22,7 @@ public class GitHubClientImpl implements GitHubClient {
 
     @Override
     public Mono<GitHubRepositoryResponse> fetchInfoRepository(String userName, String repo) {
-        return webClient.get().uri(uriBuilder -> uriBuilder.path("/{user_name}/{repos}").build(userName, repo))
+        return webClient.get().uri(uriBuilder -> uriBuilder.path("/links").queryParam("").build(userName, repo))
                 .retrieve().bodyToMono(GitHubRepositoryResponse.class);
     }
 }
