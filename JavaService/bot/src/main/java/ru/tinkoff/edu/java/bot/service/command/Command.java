@@ -14,8 +14,6 @@ public interface Command {
 
     StateUser getState();
 
-//    default boolean supports(Update update) {  }
-
     default BotCommand toApiCommand() {
         return new BotCommand(command(), description());
     }
