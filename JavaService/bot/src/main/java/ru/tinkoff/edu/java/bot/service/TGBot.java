@@ -49,6 +49,7 @@ public class TGBot implements Bot {
     public int process(List<Update> updates) {
         for (Update update : updates) {
             SendMessage request = null;
+            System.out.println(update);
             if (update.message().entities() != null && update.message().entities()[0].type() == MessageEntity.Type.bot_command) {
                 String comm = update.message().text();
                 for (Command command : commands) {
