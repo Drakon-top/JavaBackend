@@ -23,11 +23,6 @@ public class CommandStart implements Command {
         return new SendMessage(update.message().chat().id(), "Hello, " +
                 update.message().from().firstName() + " " + update.message().from().lastName() +
                 ". Enter /help to find out what I can");
-//                .parseMode(ParseMode.HTML)
-//                .disableWebPagePreview(true)
-//                .disableNotification(true)
-//                .replyToMessageId(update.updateId())
-//                .replyMarkup(new ForceReply());
     }
 
     @Override

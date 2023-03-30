@@ -3,7 +3,7 @@ package ru.tinkoff.app.parser;
 import ru.tinkoff.app.url.UrlData;
 import ru.tinkoff.app.url.UrlDataStackOverflow;
 
-public final class ParserStackOverflow implements ParserURL {
+public final class ParserStackOverflowURL implements ParserURL {
 
     private final String QUESTIONS = "questions";
     private final String TYPE_URL = "stackoverflow.com";
