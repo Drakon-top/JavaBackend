@@ -45,7 +45,6 @@ public class CommandUnTrack implements Command {
         String url = update.message().text();
         // Detective url
         Mono<DeleteLinkResponse> response = client.deleteTrackedLink(new DeleteLinkRequest(update.message().chat().id(), url));
-//        System.out.println(response.log() + " delete");
         return new SendMessage(update.message().chat().id(), "Delete tracked url");
     }
 }
