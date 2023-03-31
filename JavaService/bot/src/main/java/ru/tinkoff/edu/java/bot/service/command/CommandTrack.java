@@ -2,30 +2,20 @@ package ru.tinkoff.edu.java.bot.service.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.bot.service.models.StateUser;
 import ru.tinkoff.edu.java.bot.web.client.ScrapperClient;
-import ru.tinkoff.edu.java.bot.web.dto.AddLinkRequest;
-import ru.tinkoff.edu.java.bot.web.dto.AddLinkResponse;
+import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.AddLinkResponse;
 
 @Component
-public class CommandTrack implements Command {
+public class CommandTrack extends AbstractCommand {
 
     private ScrapperClient client;
     public CommandTrack(ScrapperClient client) {
         this.client = client;
-    }
-    @Override
-    public String command() {
-        return "/track";
-    }
-
-    @Override
-    public String description() {
-        return "Add track url";
+        informationCommand = InformationCommand.TRACK;
     }
 
     @Override
@@ -33,11 +23,6 @@ public class CommandTrack implements Command {
         // User user = getDB
         // user.state = Track
         return new SendMessage(update.message().chat().id(), "Enter url for track");
-    }
-
-    @Override
-    public StateUser getState() {
-        return StateUser.TRACK;
     }
 
     @Override

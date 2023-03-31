@@ -1,6 +1,9 @@
 package ru.tinkoff.app.parser;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.tinkoff.app.url.UrlDataStackOverflow;
 
@@ -10,41 +13,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class ParserStackOverflowURLTest {
 
-    @Test
-    void parseURL__transferredInvalidURL_URLDataGitHubIsNull() {
-        // given
-        ParserURL parserStackOverflowURL = new ParserStackOverflowURL();
+    private ParserURL parserStackOverflowURL = new ParserStackOverflowURL();
+    private final String TYPE_URL = "stackoverflow.com";
 
-        // when
-
-        // then
-        assertAll(
-                () -> assertNull(parserStackOverflowURL.parseUrl("random text")),
-                () -> assertNull(parserStackOverflowURL.parseUrl("https://stackoverflow.com/search?q=unsupported%20link")),
-                () -> assertNull(parserStackOverflowURL.parseUrl("https://github.com/person/rep/")),
-                () -> assertNull(parserStackOverflowURL.parseUrl("https://stackoverflow.com/questions/what-is-the-operator-in-c")),
-                () -> assertNull(parserStackOverflowURL.parseUrl("https://stackoverflow.com/quest/1642028/")),
-                () -> assertNull(parserStackOverflowURL.parseUrl("https://stackoverflow.com/questions/one/"))
-        );
+    @ParameterizedTest
+    @ValueSource(strings = {"random text", "https://stackoverflow.com/search?q=unsupported%20link",
+            "https://github.com/person/rep/", "https://stackoverflow.com/questions/what-is-the-operator-in-c",
+            "https://stackoverflow.com/quest/1642028/", "https://stackoverflow.com/questions/one/"
+    })
+    void parseURL__transferredInvalidURL_URLDataGitHubIsNull(String invalidUrl) {
+        assertNull(parserStackOverflowURL.parseUrl(invalidUrl));
     }
 
-    @Test
-    void parseURL__transferredValidURL_URLDataGitHubIsCorrect() {
-        // given
-        ParserURL parserStackOverflowURL = new ParserStackOverflowURL();
-
-        // when
-
-        // then
-        assertAll(
-                () -> assertEquals(parserStackOverflowURL.parseUrl("https://stackoverflow.com/questions/1642028/what-is-the-operator-in-c"),
-                        new UrlDataStackOverflow("stackoverflow.com", 1642028)),
-                () -> assertEquals(parserStackOverflowURL.parseUrl("https://stackoverflow.com/questions/1642028/"),
-                        new UrlDataStackOverflow("stackoverflow.com", 1642028)),
-                () -> assertEquals(parserStackOverflowURL.parseUrl("https://stackoverflow.com/questions/1642028/abracadabra"),
-                        new UrlDataStackOverflow("stackoverflow.com", 1642028)),
-                () -> assertEquals(parserStackOverflowURL.parseUrl("https://stackoverflow.com/questions/22"),
-                        new UrlDataStackOverflow("stackoverflow.com", 22))
-        );
+    @ParameterizedTest
+    @CsvSource(value = {
+            "https://stackoverflow.com/questions/1642028/what-is-the-operator-in-c, 1642028",
+            "https://stackoverflow.com/questions/1642028/abracadabra, 1642028",
+            "https://stackoverflow.com/questions/1642028/, 1642028",
+            "https://stackoverflow.com/questions/22, 22"
+    })
+    void parseURL__transferredValidURL_URLDataGitHubIsCorrect(String validUrl, Long id) {
+        assertEquals(parserStackOverflowURL.parseUrl(validUrl),
+                new UrlDataStackOverflow(TYPE_URL, id));
     }
 }

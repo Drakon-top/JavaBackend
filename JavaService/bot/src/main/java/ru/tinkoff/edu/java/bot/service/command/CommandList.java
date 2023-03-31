@@ -6,28 +6,19 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.bot.service.models.StateUser;
 import ru.tinkoff.edu.java.bot.web.client.ScrapperClient;
-import ru.tinkoff.edu.java.bot.web.dto.ListLinkRequest;
-import ru.tinkoff.edu.java.bot.web.dto.ListLinkResponse;
+import ru.tinkoff.edu.java.bot.dto.ListLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.ListLinkResponse;
 
 import java.net.URI;
 import java.util.List;
 
 @Component
-public class CommandList implements Command {
+public class CommandList extends AbstractCommand {
 
     private ScrapperClient client;
     public CommandList(ScrapperClient client) {
         this.client = client;
-    }
-
-    @Override
-    public String command() {
-        return "/list";
-    }
-
-    @Override
-    public String description() {
-        return "Get lists tracked urls";
+        informationCommand = InformationCommand.LIST;
     }
 
     @Override
@@ -48,10 +39,5 @@ public class CommandList implements Command {
             stringBuilder.append("Server is not responding");
         }
         return new SendMessage(update.message().chat().id(), stringBuilder.toString());
-    }
-
-    @Override
-    public StateUser getState() {
-        return StateUser.NONE;
     }
 }

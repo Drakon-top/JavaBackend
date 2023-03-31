@@ -10,23 +10,14 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class CommandHelp implements Command {
+public class CommandHelp extends AbstractCommand {
 
     private List<Command> commands;
 
     public CommandHelp(List<Command> commands) {
         this.commands = commands;
+        informationCommand = InformationCommand.HELP;
     }
-    @Override
-    public String command() {
-        return "/help";
-    }
-
-    @Override
-    public String description() {
-        return "Information about commands";
-    }
-
     @Override
     public SendMessage handle(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -34,10 +25,5 @@ public class CommandHelp implements Command {
             stringBuilder.append(command.command()).append(" ").append(command.description()).append("\n");
         }
         return new SendMessage(update.message().chat().id(), stringBuilder.toString());
-    }
-
-    @Override
-    public StateUser getState() {
-        return StateUser.NONE;
     }
 }

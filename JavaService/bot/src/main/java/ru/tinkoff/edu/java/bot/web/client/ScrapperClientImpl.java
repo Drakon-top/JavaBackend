@@ -3,10 +3,13 @@ package ru.tinkoff.edu.java.bot.web.client;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import ru.tinkoff.edu.java.bot.web.dto.*;
+import ru.tinkoff.edu.java.bot.dto.*;
 
 public class ScrapperClientImpl implements ScrapperClient {
     private final String BASE_URL = "http://localhost:8077";
+
+    private final String PATH_LINK_REQUEST = "/links";
+    private final String PARAM_ID_LINK_REQUEST = "Tg-Chat-Id";
     private final WebClient webClient;
 
     public ScrapperClientImpl() {
@@ -22,8 +25,8 @@ public class ScrapperClientImpl implements ScrapperClient {
         return webClient.post()
                 .uri(
                         uriBuilder -> uriBuilder.
-                                path("/links")
-                                .queryParam("Tg-Chat-Id", request.id())
+                                path(PATH_LINK_REQUEST)
+                                .queryParam(PARAM_ID_LINK_REQUEST, request.id())
                                 .build())
                 .bodyValue(request.url())
                 .retrieve()
@@ -34,8 +37,8 @@ public class ScrapperClientImpl implements ScrapperClient {
     public Mono<DeleteLinkResponse> deleteTrackedLink(DeleteLinkRequest request) {
         return webClient.method(HttpMethod.DELETE)
                 .uri(
-                uriBuilder -> uriBuilder.path("/links")
-                        .queryParam("Tg-Chat-Id", request.id())
+                uriBuilder -> uriBuilder.path(PATH_LINK_REQUEST)
+                        .queryParam(PARAM_ID_LINK_REQUEST, request.id())
                         .build())
                 .bodyValue(request.url())
                 .retrieve()
@@ -46,8 +49,8 @@ public class ScrapperClientImpl implements ScrapperClient {
     public Mono<ListLinkResponse> listTrackedLink(ListLinkRequest request) {
         return webClient.get()
                 .uri(
-                        uriBuilder -> uriBuilder.path("/links")
-                                .queryParam("Tg-Chat-Id", request.id())
+                        uriBuilder -> uriBuilder.path(PATH_LINK_REQUEST)
+                                .queryParam(PARAM_ID_LINK_REQUEST, request.id())
                                 .build())
                 .retrieve()
                 .bodyToMono(ListLinkResponse.class);

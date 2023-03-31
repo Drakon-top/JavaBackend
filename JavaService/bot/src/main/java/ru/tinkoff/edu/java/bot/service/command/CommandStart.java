@@ -6,27 +6,16 @@ import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.service.models.StateUser;
 
 @Component
-public class CommandStart implements Command {
-    @Override
-    public String command() {
-        return "/start";
-    }
+public class CommandStart extends AbstractCommand {
 
-    @Override
-    public String description() {
-        return "Start of work with bot";
+    public CommandStart() {
+        informationCommand = InformationCommand.START;
     }
-
     @Override
     public SendMessage handle(Update update) {
         // create chat id
         return new SendMessage(update.message().chat().id(), "Hello, " +
                 update.message().from().firstName() + " " + update.message().from().lastName() +
                 ". Enter /help to find out what I can");
-    }
-
-    @Override
-    public StateUser getState() {
-        return StateUser.NONE;
     }
 }

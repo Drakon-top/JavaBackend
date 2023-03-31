@@ -1,48 +1,38 @@
 package ru.tinkoff.app.parser;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.tinkoff.app.url.UrlDataGitHub;
+import ru.tinkoff.app.url.UrlDataStackOverflow;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class ParserGitHubURLTest {
 
-    @Test
-    void parseURL__transferredInvalidURL_URLDataGitHubIsNull() {
-        // given
-        ParserURL parserGitHubURL = new ParserGitHubURL();
+    private ParserURL parserGitHubURL = new ParserGitHubURL();
+    private final String TYPE_URL = "github.com";
 
-        // when
-
-        // then
-        assertAll(
-                () -> assertNull(parserGitHubURL.parseUrl("random text")),
-                () -> assertNull(parserGitHubURL.parseUrl("https://github.com/")),
-                () -> assertNull(parserGitHubURL.parseUrl("https://github.com/person/")),
-                () -> assertNull(parserGitHubURL.parseUrl("https://github.com/person//")),
-                () -> assertNull(parserGitHubURL.parseUrl("https://github.com/person///")),
-                () -> assertNull(parserGitHubURL.parseUrl("github.com/person/rep/")),
-                () -> assertNull(parserGitHubURL.parseUrl("https://stackoverflow.com/questions/1642028/"))
-        );
+    @ParameterizedTest
+    @ValueSource(strings = {"random text", "https://github.com/", "https://github.com/person/",
+            "https://github.com/person//", "https://github.com/person///", "github.com/person/rep/",
+            "https://stackoverflow.com/questions/1642028/}"})
+    void parseURL__transferredInvalidURL_URLDataGitHubIsNull(String invalidUrl) {
+        assertNull(parserGitHubURL.parseUrl(invalidUrl));
     }
 
-    @Test
-    void parseURL__transferredValidURL_URLDataGitHubIsCorrect() {
-        // given
-        ParserURL parserGitHubURL = new ParserGitHubURL();
+    @ParameterizedTest
+    @CsvSource(value = {
+            "https://github.com/person/rep/////, person, rep",
+            "https://github.com/person/rep/, person, rep",
+            "https://github.com/o/r11//, o, r11",
+    })
+    void parseURL__transferredValidURL_URLDataGitHubIsCorrect(String validUrl, String userName, String rep) {
 
-        // when
-
-        // then
-        assertAll(
-                () -> assertEquals(parserGitHubURL.parseUrl("https://github.com/person/rep/////"),
-                        new UrlDataGitHub("github.com", "person", "rep")),
-                () -> assertEquals(parserGitHubURL.parseUrl("https://github.com/person/rep/"),
-                        new UrlDataGitHub("github.com", "person", "rep")),
-                () -> assertEquals(parserGitHubURL.parseUrl("https://github.com/o/r11//"),
-                        new UrlDataGitHub("github.com", "o", "r11"))
-        );
+        assertEquals(parserGitHubURL.parseUrl(validUrl),
+                new UrlDataGitHub(TYPE_URL, userName, rep));
     }
 }

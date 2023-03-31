@@ -2,7 +2,7 @@ package ru.tinkoff.edu.java.bot.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-@RestControllerAdvice
+@RestController
 public class ChatsController {
 
     @PostMapping("/tg-chat/{id}")

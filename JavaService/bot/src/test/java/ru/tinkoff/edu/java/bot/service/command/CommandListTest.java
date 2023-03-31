@@ -1,19 +1,16 @@
 package ru.tinkoff.edu.java.bot.service.command;
 
 import com.google.gson.Gson;
-import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
-import com.pengrad.telegrambot.response.GetUpdatesResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.bot.web.client.ScrapperClient;
-import ru.tinkoff.edu.java.bot.web.dto.ListLinkRequest;
-import ru.tinkoff.edu.java.bot.web.dto.ListLinkResponse;
+import ru.tinkoff.edu.java.bot.dto.ListLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.ListLinkResponse;
 
 import java.util.List;
 import java.util.Map;

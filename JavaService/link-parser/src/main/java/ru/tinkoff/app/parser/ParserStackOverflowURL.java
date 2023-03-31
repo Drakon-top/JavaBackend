@@ -13,7 +13,7 @@ public final class ParserStackOverflowURL implements ParserURL {
         String[] args = url.split("/");
         if (args.length > 4 && args[2].equals(TYPE_URL) && args[3].equals(QUESTIONS)) {
             try {
-                Integer id = Integer.parseInt(args[4]);
+                Long id = Long.parseLong(args[4]);
                 return new UrlDataStackOverflow(TYPE_URL, id);
             } catch (NumberFormatException e) {
                 // Bad url
