@@ -2,12 +2,17 @@ package ru.tinkoff.edu.java.bot.service;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
+import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.MessageEntity;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.model.request.Keyboard;
+import com.pengrad.telegrambot.model.request.KeyboardButton;
+import com.pengrad.telegrambot.model.request.ReplyKeyboardMarkup;
 import com.pengrad.telegrambot.request.BaseRequest;
 import com.pengrad.telegrambot.request.GetUpdates;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.request.SetMyCommands;
 import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +27,7 @@ import ru.tinkoff.edu.java.bot.service.models.StateUser;
 import ru.tinkoff.edu.java.bot.service.models.User;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +40,12 @@ public class TGBot implements Bot {
         this.commands = commands;
         bot = new TelegramBot(token);
         bot.setUpdatesListener(this);
+        BotCommand[] botCommands = new BotCommand[commands.size()];
+        for (int i = 0; i < commands.size(); i++) {
+            Command command = commands.get(i);
+            botCommands[i] = new BotCommand(command.command(), command.description());
+        }
+        bot.execute(new SetMyCommands(botCommands));
     }
 
     @Override
