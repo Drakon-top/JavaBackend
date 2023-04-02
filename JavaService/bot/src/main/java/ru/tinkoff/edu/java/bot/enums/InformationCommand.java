@@ -1,7 +1,5 @@
 package ru.tinkoff.edu.java.bot.enums;
 
-import ru.tinkoff.edu.java.bot.service.models.StateUser;
-
 public enum InformationCommand {
     START("/start", "Start of work with bot", StateUser.NONE),
     HELP("/help", "Information about commands", StateUser.NONE),

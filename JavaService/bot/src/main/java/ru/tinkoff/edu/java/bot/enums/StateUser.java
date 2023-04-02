@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.bot.service.models;
+package ru.tinkoff.edu.java.bot.enums;
 
 public enum StateUser {
     NONE,

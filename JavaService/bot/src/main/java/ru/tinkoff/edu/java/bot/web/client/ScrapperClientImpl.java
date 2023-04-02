@@ -11,7 +11,7 @@ public class ScrapperClientImpl implements ScrapperClient {
     private final String PATH_LINK_REQUEST = "/links";
     private final String PARAM_ID_LINK_REQUEST = "Tg-Chat-Id";
 
-    private final String PATH_ID_REQUEST = "tg-chat";
+    private final String PATH_ID_REQUEST = "/tg-chat";
     private final WebClient webClient;
 
     public ScrapperClientImpl() {

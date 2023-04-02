@@ -6,31 +6,19 @@ import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.MessageEntity;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.model.request.Keyboard;
-import com.pengrad.telegrambot.model.request.KeyboardButton;
-import com.pengrad.telegrambot.model.request.ReplyKeyboardMarkup;
 import com.pengrad.telegrambot.request.BaseRequest;
-import com.pengrad.telegrambot.request.GetUpdates;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SetMyCommands;
 import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.SendResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Service;
-import ru.tinkoff.edu.java.bot.configuration.BotConfiguration;
 import ru.tinkoff.edu.java.bot.service.command.Command;
-import ru.tinkoff.edu.java.bot.service.command.CommandTrack;
-import ru.tinkoff.edu.java.bot.service.command.CommandUnTrack;
-import ru.tinkoff.edu.java.bot.service.models.StateUser;
+import ru.tinkoff.edu.java.bot.enums.StateUser;
 import ru.tinkoff.edu.java.bot.service.models.User;
 
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 @Service
 public class TGBot implements Bot {

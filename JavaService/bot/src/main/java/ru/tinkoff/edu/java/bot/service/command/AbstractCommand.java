@@ -1,7 +1,7 @@
 package ru.tinkoff.edu.java.bot.service.command;
 
 import ru.tinkoff.edu.java.bot.enums.InformationCommand;
-import ru.tinkoff.edu.java.bot.service.models.StateUser;
+import ru.tinkoff.edu.java.bot.enums.StateUser;
 
 public abstract class AbstractCommand implements Command {
     protected InformationCommand informationCommand;
