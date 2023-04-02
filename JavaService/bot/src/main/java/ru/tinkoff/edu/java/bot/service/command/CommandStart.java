@@ -3,7 +3,7 @@ package ru.tinkoff.edu.java.bot.service.command;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.stereotype.Component;
-import ru.tinkoff.edu.java.bot.service.models.StateUser;
+import ru.tinkoff.edu.java.bot.enums.InformationCommand;
 
 @Component
 public class CommandStart extends AbstractCommand {

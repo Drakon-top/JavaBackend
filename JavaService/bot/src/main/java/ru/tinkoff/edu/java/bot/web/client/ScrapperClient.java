@@ -9,4 +9,8 @@ public interface ScrapperClient {
     Mono<DeleteLinkResponse> deleteTrackedLink(DeleteLinkRequest request);
 
     Mono<ListLinkResponse> listTrackedLink(ListLinkRequest request);
+
+    void registerChat(Long id);
+
+    void deleteChat(Long id);
 }

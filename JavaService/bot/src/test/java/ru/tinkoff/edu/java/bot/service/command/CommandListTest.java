@@ -21,8 +21,9 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class CommandListTest {
 
-    private final  String data = "{'update_id': 557926017, 'message': {'message_id': 158, 'chat': {'id': 1296945790, " +
-            "'type': 'Private', 'first_name': 'Sergey', 'last_name': 'Kuznetsov'}, 'text': '/start', 'entities': [{'type': 'bot_command'}]}}";
+    private final  String data = """ 
+            {'update_id': 557926017, 'message': {'message_id': 158, 'chat': {'id': 1296945790,
+            'type': 'Private', 'first_name': 'Sergey', 'last_name': 'Kuznetsov'}, 'text': '/start', 'entities': [{'type': 'bot_command'}]}}""";
     private final Gson gson = new Gson();
     @Mock
     private ScrapperClient scrapperClient;

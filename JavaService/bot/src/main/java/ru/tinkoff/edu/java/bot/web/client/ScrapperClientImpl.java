@@ -10,6 +10,8 @@ public class ScrapperClientImpl implements ScrapperClient {
 
     private final String PATH_LINK_REQUEST = "/links";
     private final String PARAM_ID_LINK_REQUEST = "Tg-Chat-Id";
+
+    private final String PATH_ID_REQUEST = "tg-chat";
     private final WebClient webClient;
 
     public ScrapperClientImpl() {
@@ -37,9 +39,9 @@ public class ScrapperClientImpl implements ScrapperClient {
     public Mono<DeleteLinkResponse> deleteTrackedLink(DeleteLinkRequest request) {
         return webClient.method(HttpMethod.DELETE)
                 .uri(
-                uriBuilder -> uriBuilder.path(PATH_LINK_REQUEST)
-                        .queryParam(PARAM_ID_LINK_REQUEST, request.id())
-                        .build())
+                        uriBuilder -> uriBuilder.path(PATH_LINK_REQUEST)
+                                .queryParam(PARAM_ID_LINK_REQUEST, request.id())
+                                .build())
                 .bodyValue(request.url())
                 .retrieve()
                 .bodyToMono(DeleteLinkResponse.class);
@@ -56,5 +58,16 @@ public class ScrapperClientImpl implements ScrapperClient {
                 .bodyToMono(ListLinkResponse.class);
     }
 
+    @Override
+    public void registerChat(Long id) {
+        webClient.post().uri(uriBuilder -> uriBuilder.path(PATH_ID_REQUEST + "/{id}").build(id))
+                .retrieve();
+    }
+
+    @Override
+    public void deleteChat(Long id) {
+        webClient.method(HttpMethod.DELETE).uri(uriBuilder -> uriBuilder.path(PATH_ID_REQUEST + "/{id}").build(id))
+                .retrieve();
+    }
 
 }

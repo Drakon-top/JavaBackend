@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.bot.controller;
+package ru.tinkoff.edu.java.scrapper.web.controller;
 
 import org.springframework.web.bind.annotation.*;
 

@@ -4,7 +4,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import ru.tinkoff.edu.java.bot.service.models.StateUser;
+import ru.tinkoff.edu.java.bot.enums.InformationCommand;
 import ru.tinkoff.edu.java.bot.web.client.ScrapperClient;
 import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
 import ru.tinkoff.edu.java.bot.dto.AddLinkResponse;

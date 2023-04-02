@@ -2,12 +2,10 @@ package ru.tinkoff.edu.java.bot.service.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.tinkoff.edu.java.bot.service.models.StateUser;
+import ru.tinkoff.edu.java.bot.enums.InformationCommand;
 
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class CommandHelp extends AbstractCommand {

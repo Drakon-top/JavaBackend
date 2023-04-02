@@ -30,6 +30,7 @@ import ru.tinkoff.edu.java.bot.service.models.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Service
 public class TGBot implements Bot {
@@ -40,12 +41,8 @@ public class TGBot implements Bot {
         this.commands = commands;
         bot = new TelegramBot(token);
         bot.setUpdatesListener(this);
-        BotCommand[] botCommands = new BotCommand[commands.size()];
-        for (int i = 0; i < commands.size(); i++) {
-            Command command = commands.get(i);
-            botCommands[i] = new BotCommand(command.command(), command.description());
-        }
-        bot.execute(new SetMyCommands(botCommands));
+        bot.execute(new SetMyCommands(commands.stream().map(x -> new BotCommand(x.command(), x.description()))
+                .toArray(BotCommand[]::new)));
     }
 
     @Override
@@ -61,7 +58,6 @@ public class TGBot implements Bot {
     public int process(List<Update> updates) {
         for (Update update : updates) {
             SendMessage request = null;
-            System.out.println(update);
             if (update.message().entities() != null && update.message().entities()[0].type() == MessageEntity.Type.bot_command) {
                 String comm = update.message().text();
                 for (Command command : commands) {
