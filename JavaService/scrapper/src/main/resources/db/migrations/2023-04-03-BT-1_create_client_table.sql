@@ -4,6 +4,6 @@
 
 create table if not exists client
 (
-    chat_id   bigint primary key not null,
+    chat_id   serial primary key not null,
     user_name text               not null
 );
