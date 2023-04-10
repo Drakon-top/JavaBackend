@@ -4,6 +4,6 @@
 
 create table if not exists link
 (
-    id      serial primary key not null,
-    link    text               not null
+    id  serial primary key not null,
+    url text               not null
 );
