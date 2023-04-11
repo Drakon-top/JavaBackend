@@ -39,7 +39,7 @@ public class JdbcLinkTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     @Test
-    public void addLink() throws SQLException {
+    public void addLink() {
         List<DataLinkTable> listLinks = linkTable.findAllLinks();
         assert (listLinks.size() == 0);
 
