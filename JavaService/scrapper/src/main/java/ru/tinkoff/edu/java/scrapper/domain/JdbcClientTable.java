@@ -11,11 +11,11 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Component
-public class OperationClientTable {
+public class JdbcClientTable {
 
     private final DataSource dataSource;
 
-    public OperationClientTable(DataSource dataSource) {
+    public JdbcClientTable(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
