@@ -1,21 +1,10 @@
 package ru.tinkoff.app;
 
-import liquibase.Liquibase;
-import liquibase.database.core.PostgresDatabase;
-import liquibase.database.jvm.JdbcConnection;
-import liquibase.exception.DatabaseException;
-import liquibase.exception.LiquibaseException;
-import liquibase.resource.DirectoryResourceAccessor;
-import liquibase.resource.ResourceAccessor;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.FileNotFoundException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestDataTable extends IntegrationEnvironment {
 
     @Test
-    void database__startMigration_databaseRun() throws DatabaseException {
+    void database__startMigration_databaseRun() {
         assertNotNull(database);
         try (Connection connection = DriverManager.getConnection(POSTGRES_CONTAINER.getJdbcUrl(), POSTGRES_CONTAINER.getUsername(), POSTGRES_CONTAINER.getPassword())) {
             ResultSet resultSet = connection.getMetaData().getTables(null, null,
