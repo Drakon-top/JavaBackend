@@ -3,7 +3,7 @@ package ru.tinkoff.edu.java.scrapper.domain;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.web.dto.db.DataLink;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 
 import javax.sql.DataSource;
 import java.net.URI;

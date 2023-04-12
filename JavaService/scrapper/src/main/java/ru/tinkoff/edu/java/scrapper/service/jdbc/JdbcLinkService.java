@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestLinkTable;
 import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestUserLinksTable;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-import ru.tinkoff.edu.java.scrapper.web.dto.db.DataLink;
-import ru.tinkoff.edu.java.scrapper.web.dto.db.DataUserLinks;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 
 import java.net.URI;
 import java.util.Collection;

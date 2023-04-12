@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.web.dto.db.DataLink;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 
 import java.net.URISyntaxException;
 import java.util.List;

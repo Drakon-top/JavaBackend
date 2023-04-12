@@ -1,6 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.service;
 
-import ru.tinkoff.edu.java.scrapper.web.dto.db.DataLink;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 
 import java.net.URI;
 import java.util.Collection;

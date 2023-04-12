@@ -3,7 +3,7 @@ package ru.tinkoff.app;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.web.dto.db.DataUser;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataUser;
 
 import java.net.URISyntaxException;
 import java.util.List;

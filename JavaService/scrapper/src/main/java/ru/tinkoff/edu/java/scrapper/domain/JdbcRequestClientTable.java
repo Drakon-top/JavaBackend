@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.JdbcTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
-import ru.tinkoff.edu.java.scrapper.web.dto.db.DataUser;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataUser;
 
 import javax.sql.DataSource;
 import java.util.List;

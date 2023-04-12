@@ -1,11 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.web.client;
 
 import reactor.core.publisher.Mono;
-import ru.tinkoff.edu.java.scrapper.web.dto.GitHubRepositoryResponse;
+import ru.tinkoff.edu.java.scrapper.dto.GitHubRepositoryResponse;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.stereotype.Service;
-
-import java.beans.ConstructorProperties;
 
 public class GitHubClientImpl implements GitHubClient {
 
