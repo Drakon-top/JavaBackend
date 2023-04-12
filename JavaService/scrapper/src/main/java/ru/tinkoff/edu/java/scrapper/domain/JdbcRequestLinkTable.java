@@ -1,13 +1,13 @@
 package ru.tinkoff.edu.java.scrapper.domain;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.JdbcTransactionManager;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.support.TransactionTemplate;
-import ru.tinkoff.edu.java.scrapper.web.dto.DataLinkTable;
+import org.springframework.transaction.annotation.Transactional;
+import ru.tinkoff.edu.java.scrapper.web.dto.db.DataLink;
 
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Component
@@ -18,25 +18,38 @@ public class JdbcRequestLinkTable {
         this.dataSource = dataSource;
     }
 
-    public void addLink(String link) {
-        TransactionTemplate transactionTemplate = new TransactionTemplate(new JdbcTransactionManager(dataSource));
+    @Transactional
+    public DataLink addLink(URI link) {
         JdbcTemplate template = new JdbcTemplate(dataSource);
-        transactionTemplate.execute(a -> template.update("""
-                insert into link (url)
-                values (?)""", link
-        ));
+        Long idLink = template.queryForObject("""
+                insert into link(url)
+                values (?)
+                returning id""", Long.class, link.toString()
+        );
+        return new DataLink(idLink, link);
     }
 
-    public void removeLink(String link) {
-        TransactionTemplate transactionTemplate = new TransactionTemplate(new JdbcTransactionManager(dataSource));
+    @Transactional
+    public DataLink removeLink(URI link) {
         JdbcTemplate template = new JdbcTemplate(dataSource);
-        transactionTemplate.execute(a -> template.update("""
-                   delete from link where url = ?""", link
-        ));
+        Long idLink = template.queryForObject("""
+                delete from link where url = ?
+                RETURNING id""", Long.class, link.toString()
+        );
+        return new DataLink(idLink, link);
     }
 
-    public List<DataLinkTable> findAllLinks() {
+    @Transactional
+    public List<DataLink> findAllLinks() {
         JdbcTemplate template = new JdbcTemplate(dataSource);
-        return template.query("select id, url from link", new BeanPropertyRowMapper<>(DataLinkTable.class));
+        return template.query("select id, url from link", (rs, rowNum) -> {
+            Long id = rs.getLong("id");
+            String url = rs.getString("url");
+            try {
+                return new DataLink(id, new URI(url));
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

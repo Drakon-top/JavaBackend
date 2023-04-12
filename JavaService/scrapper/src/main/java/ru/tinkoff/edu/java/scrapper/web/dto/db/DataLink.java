@@ -1,13 +1,15 @@
-package ru.tinkoff.edu.java.scrapper.web.dto;
+package ru.tinkoff.edu.java.scrapper.web.dto.db;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.net.URI;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DataLinkTable {
+public class DataLink {
     private Long id;
-    private String url;
+    private URI url;
 }

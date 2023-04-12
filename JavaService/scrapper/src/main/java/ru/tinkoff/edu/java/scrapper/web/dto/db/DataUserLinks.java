@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.web.dto;
+package ru.tinkoff.edu.java.scrapper.web.dto.db;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DataUserLinksTable {
+public class DataUserLinks {
     private Long userId;
     private Long linksId;
 }

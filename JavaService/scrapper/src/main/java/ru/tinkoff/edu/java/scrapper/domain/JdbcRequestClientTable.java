@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.JdbcTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
-import ru.tinkoff.edu.java.scrapper.web.dto.DataUserTable;
+import ru.tinkoff.edu.java.scrapper.web.dto.db.DataUser;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -36,8 +36,8 @@ public class JdbcRequestClientTable {
         ));
     }
 
-    public List<DataUserTable> findAllUsers() {
+    public List<DataUser> findAllUsers() {
         JdbcTemplate template = new JdbcTemplate(dataSource);
-        return template.query("select chat_id, user_name from client", new BeanPropertyRowMapper<>(DataUserTable.class));
+        return template.query("select chat_id, user_name from client", new BeanPropertyRowMapper<>(DataUser.class));
     }
 }
