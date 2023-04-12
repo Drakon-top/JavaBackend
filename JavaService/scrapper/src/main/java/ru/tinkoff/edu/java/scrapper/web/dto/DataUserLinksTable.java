@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DataUserLinksTable {
     private Long userId;
-    private Long linkId;
+    private Long linksId;
 }

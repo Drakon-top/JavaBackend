@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestLinkTable;
 import ru.tinkoff.edu.java.scrapper.web.dto.DataLinkTable;
 
 import java.util.List;
@@ -12,11 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class JdbcRequestLinkTest extends JdbcRequestTableTest {
-    private JdbcRequestLinkTable linkTable;
-    private final String TEST_URL = "https://github.com/person/rep/";
 
     public JdbcRequestLinkTest() {
-        linkTable = new JdbcRequestLinkTable(dataSource);
+        super();
     }
 
     @Transactional
@@ -33,15 +30,16 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
         DataLinkTable dataLinkTable = listLinksNow.get(0);
         assertAll(
                 () -> assertEquals(wasSize + 1, listLinksNow.size()),
+                () -> assertNotNull(dataLinkTable),
                 () -> assertNotNull(dataLinkTable.getId()),
-                () -> assertEquals(dataLinkTable.getUrl(), TEST_URL)
+                () -> assertEquals(TEST_URL, dataLinkTable.getUrl())
         );
     }
 
     @Transactional
     @Rollback
     @Test
-    public void removeTest__removeLinkInDB__CountLinkDecrement() {
+    public void removeLink__removeLinkInDB__CountLinkDecrement() {
         linkTable.addLink(TEST_URL);
         List<DataLinkTable> listLinksWas = linkTable.findAllLinks();
         int wasSize = listLinksWas.size();
@@ -49,15 +47,15 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
         linkTable.removeLink(TEST_URL);
 
         List<DataLinkTable> listLinks = linkTable.findAllLinks();
-        assertEquals(listLinks.size(), wasSize - 1);
+        assertEquals(wasSize - 1, listLinks.size());
     }
 
     @Transactional
     @Rollback
     @Test
-    public void findAllTest__addLink_checkedFindThisLink() {
+    public void findAllLink__addLink_checkedFindThisLink() {
         List<DataLinkTable> listLinksWas = linkTable.findAllLinks();
-        assertEquals(listLinksWas.size(), 0);
+        assertEquals(0, listLinksWas.size());
         linkTable.addLink(TEST_URL);
 
         List<DataLinkTable> listLinks = linkTable.findAllLinks();
@@ -65,8 +63,9 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
         assertEquals(listLinks.size(), 1);
         DataLinkTable dataLinkTable = listLinks.get(0);
         assertAll(
+                () -> assertNotNull(dataLinkTable),
                 () -> assertNotNull(dataLinkTable.getId()),
-                () -> assertEquals(dataLinkTable.getUrl(), TEST_URL)
+                () -> assertEquals(TEST_URL, dataLinkTable.getUrl())
         );
     }
 

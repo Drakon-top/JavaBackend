@@ -25,7 +25,7 @@ public class TestDataTable extends IntegrationEnvironment {
             assertAll(
                     () -> assertTrue(tableName.contains("link")),
                     () -> assertTrue(tableName.contains("client")),
-                    () -> assertTrue(tableName.contains("userlinks"))
+                    () -> assertTrue(tableName.contains("user_links"))
             );
 
         } catch (SQLException e) {

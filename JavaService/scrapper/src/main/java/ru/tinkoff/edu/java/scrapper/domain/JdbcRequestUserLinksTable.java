@@ -31,12 +31,12 @@ public class JdbcRequestUserLinksTable {
         TransactionTemplate transactionTemplate = new TransactionTemplate(new JdbcTransactionManager(dataSource));
         JdbcTemplate template = new JdbcTemplate(dataSource);
         transactionTemplate.execute(a -> template.update("""
-                   delete from userlinks where user_id = ? and links_id = ?""", chatId, linkId
+                   delete from user_links where user_id = ? and links_id = ?""", chatId, linkId
         ));
     }
 
-    public List<DataUserLinksTable> findAllLinks() {
+    public List<DataUserLinksTable> findAllUserLinks() {
         JdbcTemplate template = new JdbcTemplate(dataSource);
-        return template.query("select id, user_id, links_id from userlinks", new BeanPropertyRowMapper<>(DataUserLinksTable.class));
+        return template.query("select user_id, links_id from user_links", new BeanPropertyRowMapper<>(DataUserLinksTable.class));
     }
 }

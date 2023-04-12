@@ -3,8 +3,6 @@ package ru.tinkoff.app;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestClientTable;
-import ru.tinkoff.edu.java.scrapper.web.dto.DataLinkTable;
 import ru.tinkoff.edu.java.scrapper.web.dto.DataUserTable;
 
 import java.util.List;
@@ -12,12 +10,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JdbcRequestClientTest extends JdbcRequestTableTest {
-    private JdbcRequestClientTable userTable;
-    private final String USER_NAME = "Alex";
-    private final Long CHAT_ID = 13424L;
 
     public JdbcRequestClientTest() {
-        userTable = new JdbcRequestClientTable(dataSource);
+        super();
     }
 
     @Transactional
@@ -34,15 +29,16 @@ public class JdbcRequestClientTest extends JdbcRequestTableTest {
         DataUserTable dataUserTable = listUsersNow.get(0);
         assertAll(
                 () -> assertEquals(wasSize + 1, listUsersNow.size()),
-                () -> assertEquals(dataUserTable.getChatId(), CHAT_ID),
-                () -> assertEquals(dataUserTable.getUserName(), USER_NAME)
+                () -> assertNotNull(dataUserTable),
+                () -> assertEquals(CHAT_ID, dataUserTable.getChatId()),
+                () -> assertEquals(USER_NAME, dataUserTable.getUserName())
         );
     }
 
     @Transactional
     @Rollback
     @Test
-    public void removeTest__removeUserInDB__CountUserDecrement() {
+    public void removeUser__removeUserInDB__CountUserDecrement() {
         userTable.addUser(CHAT_ID, USER_NAME);
         List<DataUserTable> listUsersWas = userTable.findAllUsers();
         int wasSize = listUsersWas.size();
@@ -56,7 +52,7 @@ public class JdbcRequestClientTest extends JdbcRequestTableTest {
     @Transactional
     @Rollback
     @Test
-    public void findAllTest__addLink_checkedFindThisLink() {
+    public void findAllUser__addLink_checkedFindThisLink() {
         List<DataUserTable> listUsersWas = userTable.findAllUsers();
         assertEquals(listUsersWas.size(), 0);
         userTable.addUser(CHAT_ID, USER_NAME);
@@ -65,6 +61,7 @@ public class JdbcRequestClientTest extends JdbcRequestTableTest {
         assertEquals(listUsers.size(), 1);
         DataUserTable dataUserTable = listUsers.get(0);
         assertAll(
+                () -> assertNotNull(dataUserTable),
                 () -> assertEquals(dataUserTable.getChatId(), CHAT_ID),
                 () -> assertEquals(dataUserTable.getUserName(), USER_NAME)
         );
