@@ -22,7 +22,7 @@ public class JdbcRequestUserLinksTable {
         TransactionTemplate transactionTemplate = new TransactionTemplate(new JdbcTransactionManager(dataSource));
         JdbcTemplate template = new JdbcTemplate(dataSource);
         transactionTemplate.execute(a -> template.update("""
-                insert into userlinks (user_id, links_id)
+                insert into user_links (user_id, links_id)
                 values (?, ?)""", chatId, linkId
         ));
     }
