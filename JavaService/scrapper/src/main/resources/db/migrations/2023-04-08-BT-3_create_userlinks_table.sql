@@ -4,7 +4,8 @@
 
 create table if not exists userlinks
 (
-    id       serial primary key not null,
     user_id  bigint references client (chat_id),
-    links_id bigint references link (id)
+    links_id bigint references link (id),
+
+    primary key (user_id, links_id)
 );

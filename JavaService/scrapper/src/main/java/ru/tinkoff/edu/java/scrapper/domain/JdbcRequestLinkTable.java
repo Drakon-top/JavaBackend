@@ -11,10 +11,10 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Component
-public class JdbcLinkTable {
+public class JdbcRequestLinkTable {
     private final DataSource dataSource;
 
-    public JdbcLinkTable(DataSource dataSource) {
+    public JdbcRequestLinkTable(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

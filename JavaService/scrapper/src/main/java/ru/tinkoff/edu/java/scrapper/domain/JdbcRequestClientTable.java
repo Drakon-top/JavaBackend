@@ -5,38 +5,39 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.JdbcTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
-import ru.tinkoff.edu.java.scrapper.web.dto.DataUserLinksTable;
+import ru.tinkoff.edu.java.scrapper.web.dto.DataUserTable;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Component
-public class JdbcUserLinksTable {
+public class JdbcRequestClientTable {
+
     private final DataSource dataSource;
 
-    public JdbcUserLinksTable(DataSource dataSource) {
+    public JdbcRequestClientTable(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public void addUserLink(long chatId, long linkId) {
+    public void addUser(Long chatId, String userName) {
         TransactionTemplate transactionTemplate = new TransactionTemplate(new JdbcTransactionManager(dataSource));
         JdbcTemplate template = new JdbcTemplate(dataSource);
         transactionTemplate.execute(a -> template.update("""
-                insert into userlinks (user_id, links_id)
-                values (?, ?)""", chatId, linkId
+                insert into client (chat_id, user_name)
+                values (?, ?)""", chatId, userName
         ));
     }
 
-    public void removeLink(long chatId, long linkId) {
+    public void removeUser(Long chatId) {
         TransactionTemplate transactionTemplate = new TransactionTemplate(new JdbcTransactionManager(dataSource));
         JdbcTemplate template = new JdbcTemplate(dataSource);
         transactionTemplate.execute(a -> template.update("""
-                   delete from userlinks where user_id = ? and links_id = ?""", chatId, linkId
+                   delete from client where chat_id = ?""", chatId
         ));
     }
 
-    public List<DataUserLinksTable> findAllLinks() {
+    public List<DataUserTable> findAllUsers() {
         JdbcTemplate template = new JdbcTemplate(dataSource);
-        return template.query("select id, user_id, links_id from userlinks", new BeanPropertyRowMapper<>(DataUserLinksTable.class));
+        return template.query("select chat_id, user_name from client", new BeanPropertyRowMapper<>(DataUserTable.class));
     }
 }

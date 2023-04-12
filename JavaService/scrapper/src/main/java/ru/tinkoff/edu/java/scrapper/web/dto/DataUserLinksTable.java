@@ -1,4 +1,13 @@
 package ru.tinkoff.edu.java.scrapper.web.dto;
 
-public record DataUserLinksTable(Long id, Long userId, Long linkId) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DataUserLinksTable {
+    private Long userId;
+    private Long linkId;
 }
