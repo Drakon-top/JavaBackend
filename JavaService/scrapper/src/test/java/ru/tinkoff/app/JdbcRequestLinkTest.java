@@ -5,8 +5,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 
 import java.net.URISyntaxException;
+import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class JdbcRequestLinkTest extends JdbcRequestTableTest {
 
+    private final OffsetDateTime offsetDateTime = OffsetDateTime.now();
     public JdbcRequestLinkTest() throws URISyntaxException {
         super();
     }
@@ -25,7 +29,7 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
         List<DataLink> listLinks = linkTable.findAllLinks();
         int wasSize = listLinks.size();
 
-        DataLink link = linkTable.addLink(TEST_URL);
+        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime);
 
         List<DataLink> listLinksNow = linkTable.findAllLinks();
         assert (listLinksNow.size() > 0);
@@ -43,7 +47,7 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
     @Rollback
     @Test
     public void removeLink__removeLinkInDB__CountLinkDecrement() {
-        DataLink linkWas = linkTable.addLink(TEST_URL);
+        DataLink linkWas = linkTable.addLink(TEST_URL, offsetDateTime);
         List<DataLink> listLinksWas = linkTable.findAllLinks();
         int wasSize = listLinksWas.size();
 
@@ -62,7 +66,7 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
     public void findAllLink__addLink_checkedFindThisLink() {
         List<DataLink> listLinksWas = linkTable.findAllLinks();
         assertEquals(0, listLinksWas.size());
-        linkTable.addLink(TEST_URL);
+        linkTable.addLink(TEST_URL, offsetDateTime);
 
         List<DataLink> listLinks = linkTable.findAllLinks();
 
@@ -73,6 +77,15 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
                 () -> assertNotNull(dataLink.getId()),
                 () -> assertEquals(TEST_URL, dataLink.getUrl())
         );
+    }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void findLinkNotUpdateLongTime() {
+        linkTable.addLink(TEST_URL, offsetDateTime);
+        List<DataLinkWithInformation> dataLinkWithInformation = linkTable.findLinkNotUpdateLongTime(10);
+        System.out.println(Arrays.toString(dataLinkWithInformation.toArray()));
     }
 
 }

@@ -16,7 +16,7 @@ public class StackOverflowClientImpl implements StackOverflowClient {
         webClient = WebClient.create(url);
     }
     @Override
-    public Mono<StackOverflowQuestionResponse> fetchInfoQuestion(int numberQuestion) {
+    public Mono<StackOverflowQuestionResponse> fetchInfoQuestion(Long numberQuestion) {
         return webClient.get().uri(uriBuilder -> uriBuilder.path("/questions/{number}").build(numberQuestion))
                 .retrieve().bodyToMono(StackOverflowQuestionResponse.class);
     }
