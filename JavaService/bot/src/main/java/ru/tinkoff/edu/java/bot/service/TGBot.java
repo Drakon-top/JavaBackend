@@ -13,6 +13,7 @@ import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.service.command.Command;
 import ru.tinkoff.edu.java.bot.enums.StateUser;
 import ru.tinkoff.edu.java.bot.service.models.User;
@@ -73,5 +74,13 @@ public class TGBot implements Bot {
             }
         }
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
+    }
+
+    @Override
+    public void mailingToUsers(LinkUpdateRequest linkUpdateRequest) {
+        for (Long chatId : linkUpdateRequest.tgChatIds()) {
+            execute(new SendMessage(chatId,
+                    linkUpdateRequest.url() + " update! " + linkUpdateRequest.description()));
+        }
     }
 }
