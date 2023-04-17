@@ -12,7 +12,7 @@ server:
 
 spring:
   liquibase:
-    change-log: classpath*:db/migrations/master.xml
+    change-log: db/migrations/master.xml
 
   datasource:
     url: jdbc:postgresql://localhost:5432/scrapper

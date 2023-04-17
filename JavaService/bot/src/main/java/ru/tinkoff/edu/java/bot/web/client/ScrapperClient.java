@@ -10,7 +10,7 @@ public interface ScrapperClient {
 
     Mono<ListLinkResponse> listTrackedLink(ListLinkRequest request);
 
-    void registerChat(Long id);
+    void registerChat(Long id, String userName);
 
     void deleteChat(Long id);
 }

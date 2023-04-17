@@ -10,6 +10,7 @@ import ru.tinkoff.edu.java.bot.dto.ListLinkRequest;
 import ru.tinkoff.edu.java.bot.dto.ListLinkResponse;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Component
@@ -27,7 +28,14 @@ public class CommandList extends AbstractCommand {
         Mono<ListLinkResponse> response = client.listTrackedLink(new ListLinkRequest(update.message().chat().id()));
         ListLinkResponse listLinkResponse = response.block();
         if (listLinkResponse != null) {
-            List<URI> urls = listLinkResponse.urls();
+            System.out.println(listLinkResponse);
+            List<URI> urls = listLinkResponse.links().stream().map(x -> {
+                try {
+                    return new URI(x.url());
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }).toList();
             if (urls.size() > 0) {
                 for (URI url : urls) {
                     stringBuilder.append(url.toString()).append("\n");

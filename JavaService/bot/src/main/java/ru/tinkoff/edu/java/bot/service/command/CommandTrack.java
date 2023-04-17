@@ -30,6 +30,7 @@ public class CommandTrack extends AbstractCommand {
         // Add url
         String url = update.message().text();
         Mono<AddLinkResponse> response = client.addTrackedLink(new AddLinkRequest(update.message().chat().id(), url));
+        System.out.println(response.block());
         return new SendMessage(update.message().chat().id(), "Add url for track");
     }
 }

@@ -10,6 +10,7 @@ public class ScrapperClientImpl implements ScrapperClient {
 
     private final String PATH_LINK_REQUEST = "/links";
     private final String PARAM_ID_LINK_REQUEST = "Tg-Chat-Id";
+    private final String PARAM_REGISTER_CHAT_REQUEST = "User_Name";
 
     private final String PATH_ID_REQUEST = "/tg-chat";
     private final WebClient webClient;
@@ -24,6 +25,7 @@ public class ScrapperClientImpl implements ScrapperClient {
 
     @Override
     public Mono<AddLinkResponse> addTrackedLink(AddLinkRequest request) {
+        System.out.println(request);
         return webClient.post()
                 .uri(
                         uriBuilder -> uriBuilder.
@@ -59,8 +61,11 @@ public class ScrapperClientImpl implements ScrapperClient {
     }
 
     @Override
-    public void registerChat(Long id) {
-        webClient.post().uri(uriBuilder -> uriBuilder.path(PATH_ID_REQUEST + "/{id}").build(id))
+    public void registerChat(Long id, String userName) {
+        WebClient.ResponseSpec r = webClient.post().uri(
+                uriBuilder -> uriBuilder.path(PATH_ID_REQUEST + "/{id}")
+                        .queryParam(PARAM_REGISTER_CHAT_REQUEST, userName)
+                        .build(id))
                 .retrieve();
     }
 

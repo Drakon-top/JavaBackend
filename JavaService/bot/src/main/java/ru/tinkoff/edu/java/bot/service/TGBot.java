@@ -60,7 +60,7 @@ public class TGBot implements Bot {
                     execute(new SendMessage(update.message().chat().id(), "Unidentified command"));
                 }
             } else {
-                User user = new User(update.message().chat().id(), StateUser.UNTRACK);
+                User user = new User(update.message().chat().id(), StateUser.TRACK);
                 if (user.state() != StateUser.NONE) {
                     for (Command command : commands) {
                         if (command.getState() == user.state()) {

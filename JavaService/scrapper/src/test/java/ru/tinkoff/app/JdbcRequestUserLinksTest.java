@@ -24,7 +24,7 @@ public class JdbcRequestUserLinksTest extends JdbcRequestTableTest {
     @Test
     public void addUserLink__addUserLinkInDB_CountUserLinkIncrement() {
         userTable.addUser(CHAT_ID, USER_NAME);
-        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime);
+        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime, 0);
         List<DataUserLinks> listUserLinksWas = userLinksTable.findAllUserLinks();
         int was = listUserLinksWas.size();
 
@@ -46,7 +46,7 @@ public class JdbcRequestUserLinksTest extends JdbcRequestTableTest {
     @Test
     public void removeTest__removeUserLinkInDB__CountUserLinkDecrement() {
         userTable.addUser(CHAT_ID, USER_NAME);
-        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime);
+        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime, 0);
         userLinksTable.addUserLink(CHAT_ID, link.getId());
         List<DataUserLinks> listUserLinksWas = userLinksTable.findAllUserLinks();
         int was = listUserLinksWas.size();
@@ -62,7 +62,7 @@ public class JdbcRequestUserLinksTest extends JdbcRequestTableTest {
     @Test
     public void findAllUserLink__addLink_checkedFindThisLink() {
         userTable.addUser(CHAT_ID, USER_NAME);
-        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime);
+        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime, 0);
         List<DataUserLinks> listUserLinksWas = userLinksTable.findAllUserLinks();
         assertEquals(listUserLinksWas.size(), 0);
         userLinksTable.addUserLink(CHAT_ID, link.getId());

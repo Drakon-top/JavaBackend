@@ -21,14 +21,13 @@ public class JdbcRequestLinkTable {
     }
 
     @Transactional
-    public DataLink addLink(URI link, OffsetDateTime lastEditTime) {
+    public DataLink addLink(URI link, OffsetDateTime lastEditTime, Integer countAnswer) {
         JdbcTemplate template = new JdbcTemplate(dataSource);
         OffsetDateTime timeNow = OffsetDateTime.now();
-        System.out.println(timeNow.toString());
         Long idLink = template.queryForObject("""
-                insert into link(url, last_update, last_edit_time)
-                values (?, ?, ?)
-                returning id""", Long.class, link.toString(), timeNow, lastEditTime
+                insert into link(url, last_update, last_edit_time, count_commit_or_question)
+                values (?, ?, ?, ?)
+                returning id""", Long.class, link.toString(), timeNow, lastEditTime, countAnswer
         );
         return new DataLink(idLink, link);
     }
@@ -60,13 +59,14 @@ public class JdbcRequestLinkTable {
     @Transactional
     public List<DataLinkWithInformation> findLinkNotUpdateLongTime(int countLink) {
         JdbcTemplate template = new JdbcTemplate(dataSource);
-        return template.query("select id, url, last_update, last_edit_time from link order by last_update limit ? ", (rs, rowNum) -> {
+        return template.query("select id, url, last_update, last_edit_time, count_commit_or_question from link order by last_update limit ? ", (rs, rowNum) -> {
             Long id = rs.getLong("id");
             String url = rs.getString("url");
             OffsetDateTime lastUpdate = rs.getObject("last_update", OffsetDateTime.class);
             OffsetDateTime lastEditTime = rs.getObject("last_edit_time", OffsetDateTime.class);
+            Integer countAnswer = rs.getObject("count_commit_or_question", Integer.class);
             try {
-                return new DataLinkWithInformation(id, new URI(url), lastUpdate, lastEditTime);
+                return new DataLinkWithInformation(id, new URI(url), lastUpdate, lastEditTime, countAnswer);
             } catch (URISyntaxException e) {
                 throw new RuntimeException(e);
             }
