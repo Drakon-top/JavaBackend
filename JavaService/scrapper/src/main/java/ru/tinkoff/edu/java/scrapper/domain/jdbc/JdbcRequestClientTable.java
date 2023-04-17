@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.domain;
+package ru.tinkoff.edu.java.scrapper.domain.jdbc;
 
 import lombok.extern.jbosslog.JBossLog;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

@@ -2,17 +2,13 @@ package ru.tinkoff.app;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestClientTable;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestLinkTable;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestUserLinksTable;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestClientTable;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkTable;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksTable;
 
 import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class JdbcRequestTableTest extends IntegrationEnvironment {
     protected final DataSource dataSource;

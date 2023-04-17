@@ -19,6 +19,7 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkService;
+import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 import ru.tinkoff.edu.java.scrapper.web.client.BotClient;
 import ru.tinkoff.edu.java.scrapper.web.client.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.web.client.GitHubClientImpl;
@@ -38,11 +39,10 @@ public class LinkUpdaterScheduler {
     private static final Logger log =
             LoggerFactory.getLogger(LinkUpdaterScheduler.class);
 
-    private final GitHubClient gitHubClient;
-    private final StackOverflowClient stackOverflowClient;
     private final LinkService jdbcLinkService;
 
     private final BotClient botClient;
+    private final ClientManager clientManager;
 
 
     @Scheduled(fixedDelayString = "#{schedulerIntervalMs}")
@@ -53,12 +53,12 @@ public class LinkUpdaterScheduler {
             if (urlData == null) {
                 continue;
             }
-            OffsetDateTime timeEdit = timeEditLinkForType(urlData);
+            OffsetDateTime timeEdit = clientManager.timeEditLinkForType(urlData);
             if (!timeEdit.equals(data.getLastEditTime())) {
-                Integer countAnswerNow = getCountAnswer(urlData);
+                Integer countAnswerNow = clientManager.getCountAnswer(urlData);
                 String description = "";
                 if (countAnswerNow > data.getCountAnswer()) {
-                    description = getInfoCountByType(urlData.getType());
+                    description = clientManager.getInfoCountByType(urlData.getType());
                 }
                 List<DataUserLinks> dataUserLinks = jdbcLinkService.findUserLinksByLinks(data.getId());
                 botClient.updater(new LinkUpdateRequest(data.getId(), data.getUrl(), description,
@@ -66,61 +66,5 @@ public class LinkUpdaterScheduler {
             }
         }
         log.info("Update info about urls");
-    }
-
-
-    /// Лютейшая копипаста в LinkService есть тоже самое, не пойму куда по логике это вынести, или просто расширить интерфейс у LinkService?
-    private OffsetDateTime timeEditLinkForType(UrlData urlData) {
-        return switch (urlData.getType()) {
-            case GITHUB -> workWithGitHubClient((UrlDataGitHub) urlData);
-            case STACKOVERFLOW -> workWithStackOverflowClient((UrlDataStackOverflow) urlData);
-            default -> null;
-        };
-    }
-
-    private OffsetDateTime workWithGitHubClient(UrlDataGitHub urlData) {
-        Mono<GitHubRepositoryResponse> response = gitHubClient.fetchInfoRepository(urlData.userName(), urlData.repository());
-        try {
-            GitHubRepositoryResponse result = response.block();
-            return result.timeLastUpdate();
-        } catch (WebClientResponseException | NullPointerException e) {
-            return OffsetDateTime.of(LocalDate.of(2000, 1, 1), LocalTime.of(1, 1, 1), ZoneOffset.ofHours(3));
-        }
-
-    }
-
-    private OffsetDateTime workWithStackOverflowClient(UrlDataStackOverflow urlData) {
-        StackOverflowQuestionResponse response = stackOverflowClient.fetchInfoQuestion(urlData.idQuestion());
-        return response.lastEditDate();
-    }
-
-    private Integer getCountAnswer(UrlData urlData) {
-        return switch (urlData.getType()) {
-            case GITHUB -> getCountAnswerGitHub((UrlDataGitHub) urlData);
-            case STACKOVERFLOW -> getCountAnswerStackOverflow((UrlDataStackOverflow) urlData);
-            default -> null;
-        };
-    }
-
-    private Integer getCountAnswerGitHub(UrlDataGitHub urlData) {
-        GitHubCommitsResponse response = gitHubClient.fetchCommitsRepository(urlData.userName(), urlData.repository());
-        if (response == null) {
-            return 0;
-        }
-        return response.commitList().size();
-    }
-
-    private Integer getCountAnswerStackOverflow(UrlDataStackOverflow urlData) {
-        Mono<StackOverflowAnswersResponse> response = stackOverflowClient.fetchAnswersRepository(urlData.idQuestion());
-        Integer res = Objects.requireNonNull(response.block()).answers().length;
-        return res;
-    }
-
-    private String getInfoCountByType(TypeClient type) {
-        return switch (type) {
-            case GITHUB -> "New commit";
-            case STACKOVERFLOW -> "New answer";
-            default -> "";
-        };
     }
 }

@@ -2,7 +2,7 @@ package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestClientTable;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestClientTable;
 import ru.tinkoff.edu.java.scrapper.service.TgChatService;
 
 @Component

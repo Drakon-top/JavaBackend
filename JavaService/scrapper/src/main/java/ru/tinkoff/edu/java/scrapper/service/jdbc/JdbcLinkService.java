@@ -2,15 +2,14 @@ package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.app.ParsingUrlService;
 import ru.tinkoff.app.url.UrlData;
 import ru.tinkoff.app.url.UrlDataGitHub;
 import ru.tinkoff.app.url.UrlDataStackOverflow;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestLinkTable;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestUserLinksTable;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkTable;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksTable;
 import ru.tinkoff.edu.java.scrapper.dto.GitHubCommitsResponse;
 import ru.tinkoff.edu.java.scrapper.dto.GitHubRepositoryResponse;
 import ru.tinkoff.edu.java.scrapper.dto.StackOverflowAnswersResponse;
@@ -19,6 +18,7 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
+import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 import ru.tinkoff.edu.java.scrapper.web.client.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.web.client.StackOverflowClient;
 
@@ -41,8 +41,10 @@ public class JdbcLinkService implements LinkService {
     private final JdbcRequestLinkTable jdbcRequestLink;
     private final JdbcRequestUserLinksTable jdbcRequestUserLinks;
 
-    private final GitHubClient gitHubClient;
-    private final StackOverflowClient stackOverflowClient;
+//    private final GitHubClient gitHubClient;
+//    private final StackOverflowClient stackOverflowClient;
+
+    private final ClientManager clientManager;
 
 
     @Override
@@ -51,8 +53,8 @@ public class JdbcLinkService implements LinkService {
         if (urlData == null) {
             return null;
         }
-        OffsetDateTime timeEditLast = timeEditLinkForType(urlData);
-        Integer count = getCountAnswer(urlData);
+        OffsetDateTime timeEditLast = clientManager.timeEditLinkForType(urlData);
+        Integer count = clientManager.getCountAnswer(urlData);
         DataLink dataLink = jdbcRequestLink.addLink(url, timeEditLast, count);
         jdbcRequestUserLinks.addUserLink(tgChatId, dataLink.getId());
         return dataLink;
@@ -87,48 +89,4 @@ public class JdbcLinkService implements LinkService {
         return jdbcRequestUserLinks.findUserLinksByLink(idLink);
     }
 
-
-    private OffsetDateTime timeEditLinkForType(UrlData urlData) {
-        return switch (urlData.getType()) {
-            case GITHUB -> workWithGitHubClient((UrlDataGitHub) urlData);
-            case STACKOVERFLOW -> workWithStackOverflowClient((UrlDataStackOverflow) urlData);
-            default -> null;
-        };
-    }
-
-    private OffsetDateTime workWithGitHubClient(UrlDataGitHub urlData) {
-        Mono<GitHubRepositoryResponse> response = gitHubClient.fetchInfoRepository(urlData.userName(), urlData.repository());
-        try {
-            GitHubRepositoryResponse result = response.block();
-            return result.timeLastUpdate();
-        } catch (WebClientResponseException | NullPointerException e) {
-            return OffsetDateTime.of(LocalDate.of(2000, 1, 1), LocalTime.of(1, 1, 1), ZoneOffset.ofHours(3));
-        }
-    }
-
-    private OffsetDateTime workWithStackOverflowClient(UrlDataStackOverflow urlData) {
-        StackOverflowQuestionResponse response = stackOverflowClient.fetchInfoQuestion(urlData.idQuestion());
-        return response.lastEditDate();
-    }
-
-    private Integer getCountAnswer(UrlData urlData) {
-        return switch (urlData.getType()) {
-            case GITHUB -> getCountAnswerGitHub((UrlDataGitHub) urlData);
-            case STACKOVERFLOW -> getCountAnswerStackOverflow((UrlDataStackOverflow) urlData);
-            default -> null;
-        };
-    }
-
-    private Integer getCountAnswerGitHub(UrlDataGitHub urlData) {
-        GitHubCommitsResponse response = gitHubClient.fetchCommitsRepository(urlData.userName(), urlData.repository());
-        if (response == null) {
-            return 0;
-        }
-        return response.commitList().size();
-    }
-
-    private Integer getCountAnswerStackOverflow(UrlDataStackOverflow urlData) {
-        Mono<StackOverflowAnswersResponse> response = stackOverflowClient.fetchAnswersRepository(urlData.idQuestion());
-        return Objects.requireNonNull(response.block()).answers().length;
-    }
 }
