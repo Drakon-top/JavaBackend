@@ -12,10 +12,10 @@ import ru.tinkoff.edu.java.scrapper.web.controller.LinksController;
 )
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {Exception.class})
+    @ExceptionHandler(value = {NullPointerException.class})
     protected ResponseEntity<Object> handleNullPointerException(Exception ex) {
         logger.error("Exception", ex);
-        return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
 }

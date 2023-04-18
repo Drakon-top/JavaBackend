@@ -30,13 +30,12 @@ public class LinksController {
     public ListLinkResponse getLinks(@RequestParam("Tg-Chat-Id") long idChat) {
         Collection<DataLink> dataLinks = linkService.listAll(idChat);
         List<LinkResponse> linkResponses = dataLinks.stream().map(x -> new LinkResponse(x.getId(), x.getUrl().toString())).toList();
-        System.out.println(linkResponses);
         return new ListLinkResponse(linkResponses, linkResponses.size());
     }
 
     @PostMapping(path = "links", produces = APPLICATION_JSON_VALUE)
     public AddLinkRequest addLink(@RequestParam("Tg-Chat-Id") long idChat, @RequestBody String addUrl) throws URISyntaxException {
-        System.out.println(linkService.add(idChat, new URI(addUrl)));
+        linkService.add(idChat, new URI(addUrl));
         return new AddLinkRequest(addUrl);
     }
 

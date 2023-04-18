@@ -15,7 +15,6 @@ public class ChatsController {
 
     @PostMapping("/tg-chat/{id}")
     public void registerChat(@PathVariable("id") long id, @RequestParam("User_Name") String userName) {
-        System.out.println("register");
         tgChatService.register(id, userName);
     }
 
