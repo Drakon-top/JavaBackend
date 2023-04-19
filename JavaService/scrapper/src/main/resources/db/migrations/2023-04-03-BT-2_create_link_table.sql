@@ -4,6 +4,8 @@
 
 create table if not exists link
 (
-    id  serial primary key not null,
-    url text               not null
+    id             serial primary key not null,
+    url            text               not null,
+    last_update    timestamp          not null,
+    last_edit_time timestamp          not null         not null
 );

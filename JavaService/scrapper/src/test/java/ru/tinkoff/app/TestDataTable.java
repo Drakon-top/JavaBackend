@@ -3,10 +3,7 @@ package ru.tinkoff.app;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +25,7 @@ public class TestDataTable extends IntegrationEnvironment {
             assertAll(
                     () -> assertTrue(tableName.contains("link")),
                     () -> assertTrue(tableName.contains("client")),
-                    () -> assertTrue(tableName.contains("userlinks"))
+                    () -> assertTrue(tableName.contains("user_links"))
             );
 
         } catch (SQLException e) {

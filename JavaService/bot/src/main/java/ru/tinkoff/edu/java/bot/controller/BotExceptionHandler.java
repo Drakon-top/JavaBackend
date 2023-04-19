@@ -1,21 +1,19 @@
-package ru.tinkoff.edu.java.scrapper.web.controller;
+package ru.tinkoff.edu.java.bot.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
-import ru.tinkoff.edu.java.scrapper.web.controller.LinksController;
 
 @RestControllerAdvice(
-        basePackageClasses = LinksController.class
+        basePackageClasses = UpdatesController.class
 )
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class BotExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {NullPointerException.class})
+    @ExceptionHandler(value = {Exception.class})
     protected ResponseEntity<Object> handleNullPointerException(Exception ex) {
         logger.error("Exception", ex);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
     }
-
 }

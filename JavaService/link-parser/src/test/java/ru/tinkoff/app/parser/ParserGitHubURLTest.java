@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.tinkoff.app.enums.TypeClient;
 import ru.tinkoff.app.url.UrlDataGitHub;
 import ru.tinkoff.app.url.UrlDataStackOverflow;
 
@@ -15,6 +16,8 @@ public class ParserGitHubURLTest {
 
     private ParserURL parserGitHubURL = new ParserGitHubURL();
     private final String TYPE_URL = "github.com";
+
+    private final TypeClient typeClient = TypeClient.STACKOVERFLOW;
 
     @ParameterizedTest
     @ValueSource(strings = {"random text", "https://github.com/", "https://github.com/person/",
@@ -33,6 +36,6 @@ public class ParserGitHubURLTest {
     void parseURL__transferredValidURL_URLDataGitHubIsCorrect(String validUrl, String userName, String rep) {
 
         assertEquals(parserGitHubURL.parseUrl(validUrl),
-                new UrlDataGitHub(TYPE_URL, userName, rep));
+                new UrlDataGitHub(typeClient, userName, rep));
     }
 }

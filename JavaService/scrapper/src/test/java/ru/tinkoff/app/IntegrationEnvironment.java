@@ -31,11 +31,15 @@ public class IntegrationEnvironment {
 
     protected static Database database;
 
+    protected static final String DATABASE_NAME = "scrapper";
+    protected static final String DATABASE_USERNAME = "postgres";
+    protected static final String DATABASE_PASSWORD = "password";
+
     static {
         POSTGRES_CONTAINER = new PostgreSQLContainer<>("postgres:15")
-                .withDatabaseName("scrapper")
-                .withUsername("postgres")
-                .withPassword("password");
+                .withDatabaseName(DATABASE_NAME)
+                .withUsername(DATABASE_USERNAME)
+                .withPassword(DATABASE_PASSWORD);
         POSTGRES_CONTAINER.start();
         makeMigration(POSTGRES_CONTAINER);
     }
@@ -43,7 +47,6 @@ public class IntegrationEnvironment {
     private static void makeMigration(JdbcDatabaseContainer<?> container) {
         Path path = new File(".").toPath().toAbsolutePath().getParent()
                 .resolve("src/main/resources/db/migrations");
-        System.out.println("PATH" + path + " ------------------------");
         try (Connection connection = DriverManager.getConnection(container.getJdbcUrl(), container.getUsername(), container.getPassword())) {
             database = new PostgresDatabase();
             database.setConnection(new JdbcConnection(connection));
@@ -51,7 +54,8 @@ public class IntegrationEnvironment {
             ResourceAccessor resourceAccessor = new DirectoryResourceAccessor(path);
             Liquibase liquibase = new Liquibase("master.xml", resourceAccessor, database);
 
-            liquibase.update(new Contexts(), new LabelExpression());
+            liquibase.update();
+            System.out.println("make migration -----------------------------------------------------------");
         } catch (SQLException | FileNotFoundException | LiquibaseException e) {
             throw new RuntimeException(e);
         }

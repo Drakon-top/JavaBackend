@@ -2,7 +2,7 @@ package ru.tinkoff.edu.java.scrapper.web.client;
 
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import ru.tinkoff.edu.java.scrapper.web.dto.StackOverflowQuestionResponse;
+import ru.tinkoff.edu.java.scrapper.dto.StackOverflowQuestionResponse;
 
 public class StackOverflowClientImpl implements StackOverflowClient {
     private final String BASE_URL = "https://api.stackexchange.com";
@@ -16,7 +16,7 @@ public class StackOverflowClientImpl implements StackOverflowClient {
         webClient = WebClient.create(url);
     }
     @Override
-    public Mono<StackOverflowQuestionResponse> fetchInfoQuestion(int numberQuestion) {
+    public Mono<StackOverflowQuestionResponse> fetchInfoQuestion(Long numberQuestion) {
         return webClient.get().uri(uriBuilder -> uriBuilder.path("/questions/{number}").build(numberQuestion))
                 .retrieve().bodyToMono(StackOverflowQuestionResponse.class);
     }

@@ -1,9 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.web.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.tinkoff.edu.java.scrapper.web.dto.AddLinkRequest;
-import ru.tinkoff.edu.java.scrapper.web.dto.ListLinkResponse;
-import ru.tinkoff.edu.java.scrapper.web.dto.RemoteLinkResponse;
+import ru.tinkoff.edu.java.scrapper.dto.AddLinkRequest;
+import ru.tinkoff.edu.java.scrapper.dto.ListLinkResponse;
+import ru.tinkoff.edu.java.scrapper.dto.RemoteLinkResponse;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 

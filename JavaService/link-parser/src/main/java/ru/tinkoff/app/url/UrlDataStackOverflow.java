@@ -1,3 +1,10 @@
 package ru.tinkoff.app.url;
 
-public record UrlDataStackOverflow(String typeUrl, Long id) implements UrlData { }
+import ru.tinkoff.app.enums.TypeClient;
+
+public record UrlDataStackOverflow(TypeClient typeUrl, Long idQuestion) implements UrlData {
+    @Override
+    public TypeClient getType() {
+        return typeUrl;
+    }
+}
