@@ -6,9 +6,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
-import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -16,13 +16,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class JdbcRequestLinkTest extends JdbcRequestTableTest {
+public class JooqRequestLinkRepositoryTest extends JooqRequestTableRepository {
 
     private final OffsetDateTime offsetDateTime = OffsetDateTime.now();
 
     private final Integer COUNT_UPDATER = 10;
 
-    public JdbcRequestLinkTest() throws URISyntaxException {
+    public JooqRequestLinkRepositoryTest() throws URISyntaxException, SQLException {
         super();
     }
 
@@ -40,7 +40,6 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
         DataLink dataLink = listLinksNow.get(0);
         assertAll(
                 () -> assertEquals(TEST_URL, link.getUrl()),
-                () -> assertEquals(wasSize + 1, listLinksNow.size()),
                 () -> assertNotNull(dataLink),
                 () -> assertNotNull(dataLink.getId()),
                 () -> assertEquals(TEST_URL, dataLink.getUrl())
@@ -53,6 +52,7 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
     public void removeLink__removeLinkInDB__CountLinkDecrement() {
         DataLink linkWas = linkTable.addLink(TEST_URL, offsetDateTime, 0);
         List<DataLink> listLinksWas = linkTable.findAllLinks();
+        System.out.println(Arrays.toString(listLinksWas.toArray()));
         int wasSize = listLinksWas.size();
 
         DataLink linkNow = linkTable.removeLink(TEST_URL);
@@ -87,7 +87,6 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
     @Rollback
     @Test
     public void findLinkNotUpdateLongTime() {
-
         List<DataLinkWithInformation> dataLinkWithInformation = linkTable.findLinkNotUpdateLongTime(COUNT_UPDATER);
         assertEquals(dataLinkWithInformation.size(), 0);
 

@@ -38,9 +38,9 @@ public class GitHubClientImpl implements GitHubClient {
 
     @Override
     public GitHubCommitsResponse fetchCommitsRepository(String userName, String repo) {
-        Mono<GitHunCommit[]> response = webClient.get().uri(uriBuilder -> uriBuilder.path("/repos/{user_name}/{repos}/commits").build(userName, repo))
-                .retrieve().bodyToMono(GitHunCommit[].class);
         try {
+            Mono<GitHunCommit[]> response = webClient.get().uri(uriBuilder -> uriBuilder.path("/repos/{user_name}/{repos}/commits").build(userName, repo))
+                    .retrieve().bodyToMono(GitHunCommit[].class);
             GitHunCommit[] commitsResponses = response.block();
             GitHubCommitsResponse gitHubCommitsResponse = new GitHubCommitsResponse(List.of(commitsResponses));
             return gitHubCommitsResponse;

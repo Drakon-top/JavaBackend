@@ -30,15 +30,15 @@ public class StackOverflowClientImpl implements StackOverflowClient {
     public StackOverflowClientImpl(String url) {
         webClient = WebClient.create(url);
     }
+
     @Override
     public StackOverflowQuestionResponse fetchInfoQuestion(Long numberQuestion) {
-        Mono<StackOverflowQuestionsAllResponse> response = webClient.get().uri(
-                        uriBuilder -> uriBuilder.path("/questions/{number}")
-                                .queryParam(SITE, SITE_NAME)
-                                .build(numberQuestion))
-                .retrieve().bodyToMono(StackOverflowQuestionsAllResponse.class);
-
         try {
+            Mono<StackOverflowQuestionsAllResponse> response = webClient.get().uri(
+                            uriBuilder -> uriBuilder.path("/questions/{number}")
+                                    .queryParam(SITE, SITE_NAME)
+                                    .build(numberQuestion))
+                    .retrieve().bodyToMono(StackOverflowQuestionsAllResponse.class);
             StackOverflowQuestionsAllResponse questionResponses = response.block();
             return questionResponses.questionResponses()[0];
         } catch (WebClientResponseException | NullPointerException e) {

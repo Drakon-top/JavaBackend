@@ -5,7 +5,7 @@ springdoc:
 app:
   test: test_key_spring_13qk2kw!
   scheduler:
-    interval: 10000
+    interval: 50000
 
 server:
   port: 8077

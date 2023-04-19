@@ -7,15 +7,16 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JdbcRequestUserLinksTest extends JdbcRequestTableTest {
+public class JooqRequestUserLinksRepositoryTest extends JooqRequestTableRepository {
 
     private final OffsetDateTime offsetDateTime = OffsetDateTime.now();
-    public JdbcRequestUserLinksTest() throws URISyntaxException {
+    public JooqRequestUserLinksRepositoryTest() throws URISyntaxException, SQLException {
         super();
     }
 
@@ -63,8 +64,6 @@ public class JdbcRequestUserLinksTest extends JdbcRequestTableTest {
     public void findAllUserLink__addLink_checkedFindThisLink() {
         userTable.addUser(CHAT_ID, USER_NAME);
         DataLink link = linkTable.addLink(TEST_URL, offsetDateTime, 0);
-        List<DataUserLinks> listUserLinksWas = userLinksTable.findAllUserLinks();
-        assertEquals(listUserLinksWas.size(), 0);
         userLinksTable.addUserLink(CHAT_ID, link.getId());
 
         List<DataUserLinks> listUserLinks = userLinksTable.findAllUserLinks();

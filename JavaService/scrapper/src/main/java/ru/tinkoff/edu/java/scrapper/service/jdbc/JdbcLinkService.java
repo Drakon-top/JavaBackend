@@ -2,34 +2,20 @@ package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-import reactor.core.publisher.Mono;
 import ru.tinkoff.app.ParsingUrlService;
 import ru.tinkoff.app.url.UrlData;
-import ru.tinkoff.app.url.UrlDataGitHub;
-import ru.tinkoff.app.url.UrlDataStackOverflow;
-import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkTable;
-import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksTable;
-import ru.tinkoff.edu.java.scrapper.dto.GitHubCommitsResponse;
-import ru.tinkoff.edu.java.scrapper.dto.GitHubRepositoryResponse;
-import ru.tinkoff.edu.java.scrapper.dto.StackOverflowAnswersResponse;
-import ru.tinkoff.edu.java.scrapper.dto.StackOverflowQuestionResponse;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkRepository;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksRepository;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 import ru.tinkoff.edu.java.scrapper.web.ClientManager;
-import ru.tinkoff.edu.java.scrapper.web.client.GitHubClient;
-import ru.tinkoff.edu.java.scrapper.web.client.StackOverflowClient;
 
 import java.net.URI;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,12 +24,9 @@ import java.util.stream.Collectors;
 public class JdbcLinkService implements LinkService {
 
     private static final int COUNT_LINK_LIMIT = 10;
-    private final JdbcRequestLinkTable jdbcRequestLink;
-    private final JdbcRequestUserLinksTable jdbcRequestUserLinks;
-
-//    private final GitHubClient gitHubClient;
-//    private final StackOverflowClient stackOverflowClient;
-
+    private final JdbcRequestLinkRepository jdbcRequestLink;
+    private final JdbcRequestUserLinksRepository jdbcRequestUserLinks;
+    
     private final ClientManager clientManager;
 
 
