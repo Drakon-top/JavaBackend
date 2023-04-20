@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.service.jdbc;
+package ru.tinkoff.edu.java.scrapper.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,16 +17,16 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
-public class JdbcLinkUpdater implements LinkUpdater {
+public class LinkUpdaterImpl implements LinkUpdater {
 
-    private final LinkService jdbcLinkService;
+    private final LinkService linkService;
 
     private final BotClient botClient;
     private final ClientManager clientManager;
 
     @Override
     public int update() {
-        List<DataLinkWithInformation> dataLinkWithInformation = jdbcLinkService.listLongTimeUpdate();
+        List<DataLinkWithInformation> dataLinkWithInformation = linkService.listLongTimeUpdate();
         int countUpdate = 0;
         for (DataLinkWithInformation data : dataLinkWithInformation) {
             UrlData urlData = ParsingUrlService.getInfoAboutURL(data.getUrl().toString());
@@ -41,7 +41,7 @@ public class JdbcLinkUpdater implements LinkUpdater {
                 if (countAnswerNow > data.getCountAnswer()) {
                     description = clientManager.getInfoCountByType(urlData.getType());
                 }
-                List<DataUserLinks> dataUserLinks = jdbcLinkService.findUserLinksByLinks(data.getId());
+                List<DataUserLinks> dataUserLinks = linkService.findUserLinksByLinks(data.getId());
                 botClient.updater(new LinkUpdateRequest(data.getId(), data.getUrl(), description,
                         dataUserLinks.stream().map(DataUserLinks::getUserId).toList()));
                 countUpdate++;

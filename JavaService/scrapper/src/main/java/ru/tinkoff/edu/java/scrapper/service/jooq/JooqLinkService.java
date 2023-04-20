@@ -36,7 +36,6 @@ import java.util.stream.Collectors;
 public class JooqLinkService implements LinkService {
 
     private static final int COUNT_LINK_LIMIT = 10;
-    private final DSLContext dsl;
     private final ClientManager clientManager;
 
     private final JooqRequestLinkRepository jooqRequestLink;
