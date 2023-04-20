@@ -5,8 +5,8 @@ import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.UserLinks;
+import ru.tinkoff.edu.java.scrapper.domain.jooq.codegen.tables.Link;
+import ru.tinkoff.edu.java.scrapper.domain.jooq.codegen.tables.UserLinks;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 
@@ -14,7 +14,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

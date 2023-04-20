@@ -2,14 +2,11 @@ package ru.tinkoff.edu.java.scrapper.domain.jooq;
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Client;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.UserLinks;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.records.ClientRecord;
+import ru.tinkoff.edu.java.scrapper.domain.jooq.codegen.tables.Client;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUser;
-import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataUserWithInfo;
 
 import java.util.List;
 
@@ -45,5 +42,24 @@ public class JooqRequestClientRepository {
         List<DataUser> dataUserLinks = dslContext.select(Client.CLIENT.CHAT_ID, Client.CLIENT.USER_NAME)
                 .from(Client.CLIENT).fetch().into(DataUser.class);
         return dataUserLinks;
+    }
+
+    @Transactional
+    public void updateStateUser(Long chatId, String userState) {
+        dslContext.update(Client.CLIENT)
+                .set(Client.CLIENT.USER_STATE, userState)
+                .where(Client.CLIENT.CHAT_ID.eq(chatId)).execute();
+    }
+
+    public DataUserWithInfo getUser(long tgChatId) {
+        List<DataUserWithInfo> dataUserWithInfo = dslContext.select(Client.CLIENT.CHAT_ID, Client.CLIENT.USER_NAME, Client.CLIENT.USER_STATE)
+                .from(Client.CLIENT)
+                .where(Client.CLIENT.CHAT_ID.eq(tgChatId))
+                .fetch().into(DataUserWithInfo.class);
+        if (dataUserWithInfo.size() == 0) {
+            return null;
+        } else {
+            return dataUserWithInfo.get(0);
+        }
     }
 }

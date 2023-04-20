@@ -11,27 +11,34 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SetMyCommands;
 import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.SendResponse;
+import org.junit.jupiter.params.aggregator.AggregateWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
+import ru.tinkoff.edu.java.bot.dto.UserGetResponse;
 import ru.tinkoff.edu.java.bot.service.command.Command;
 import ru.tinkoff.edu.java.bot.enums.StateUser;
 import ru.tinkoff.edu.java.bot.service.models.User;
+import ru.tinkoff.edu.java.bot.web.client.ScrapperClient;
 
 
 import java.util.List;
 
 @Service
 public class TGBot implements Bot {
-    private TelegramBot bot;
-    private List<Command> commands;
+    private final TelegramBot bot;
+    private final List<Command> commands;
 
-    public TGBot(@Value("#{getBotToken}") String token, List<Command> commands) {
+    private ScrapperClient scrapperClient;
+
+    public TGBot(@Value("#{getBotToken}") String token, List<Command> commands, ScrapperClient scrapperClient) {
         this.commands = commands;
         bot = new TelegramBot(token);
         bot.setUpdatesListener(this);
         bot.execute(new SetMyCommands(commands.stream().map(x -> new BotCommand(x.command(), x.description()))
                 .toArray(BotCommand[]::new)));
+        this.scrapperClient = scrapperClient;
     }
 
     @Override
@@ -47,30 +54,36 @@ public class TGBot implements Bot {
     public int process(List<Update> updates) {
         for (Update update : updates) {
             SendMessage request = null;
+            Long chatId = update.message().chat().id();
             if (update.message().entities() != null && update.message().entities()[0].type() == MessageEntity.Type.bot_command) {
                 String comm = update.message().text();
                 for (Command command : commands) {
                     if (command.command().equals(comm) ){
                         request = command.handle(update);
                         execute(request);
-                        // user.state = command.getState();
+                        scrapperClient.updateUser(chatId, command.getState());
                         break;
                     }
                 }
                 if (request == null) {
-                    execute(new SendMessage(update.message().chat().id(), "Unidentified command"));
+                    execute(new SendMessage(chatId, "Unidentified command"));
                 }
             } else {
-                User user = new User(update.message().chat().id(), StateUser.TRACK);
-                if (user.state() != StateUser.NONE) {
-                    for (Command command : commands) {
-                        if (command.getState() == user.state()) {
-                            request = command.handleWithArgument(update);
-                            execute(request);
-                            break;
+                UserGetResponse userGetResponse = scrapperClient.getUser(chatId).block();
+                if (userGetResponse != null) {
+                    User user = new User(userGetResponse.id(), userGetResponse.userName(),
+                            StateUser.valueOf(userGetResponse.userState()));
+                    if (user.userState() != StateUser.NONE) {
+                        for (Command command : commands) {
+                            if (command.getState() == user.userState()) {
+                                request = command.handleWithArgument(update);
+                                execute(request);
+                                break;
+                            }
                         }
                     }
                 }
+
             }
         }
         return UpdatesListener.CONFIRMED_UPDATES_ALL;

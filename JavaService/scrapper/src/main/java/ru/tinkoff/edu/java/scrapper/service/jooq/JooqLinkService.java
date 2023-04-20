@@ -1,22 +1,10 @@
 package ru.tinkoff.edu.java.scrapper.service.jooq;
 
-import lombok.Lombok;
 import lombok.RequiredArgsConstructor;
-import org.jooq.DSLContext;
-import org.jooq.Records;
-import org.jooq.Result;
-import org.jooq.User;
-import org.jooq.exception.DataAccessException;
-import org.springframework.stereotype.Component;
 import ru.tinkoff.app.ParsingUrlService;
 import ru.tinkoff.app.url.UrlData;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.JooqRequestLinkRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.JooqRequestUserLinksRepository;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Client;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.UserLinks;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.records.LinkRecord;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.records.UserLinksRecord;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
@@ -24,9 +12,7 @@ import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
