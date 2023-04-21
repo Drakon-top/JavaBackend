@@ -6,6 +6,7 @@ app:
   test: test_key_spring_13qk2kw!
   scheduler:
     interval: 50000
+  database-access-type: jpa
 
 server:
   port: 8077

@@ -8,7 +8,7 @@ import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaRequestClientRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.entity.ClientEntity;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserWithInfo;
 import ru.tinkoff.edu.java.scrapper.service.TgChatService;
-//@Service
+
 @RequiredArgsConstructor
 public class JpaTgChatService implements TgChatService {
 

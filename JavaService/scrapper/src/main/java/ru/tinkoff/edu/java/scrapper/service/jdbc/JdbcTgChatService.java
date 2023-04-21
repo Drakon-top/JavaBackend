@@ -8,7 +8,6 @@ import ru.tinkoff.edu.java.scrapper.dto.UserInfoResponse;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserWithInfo;
 import ru.tinkoff.edu.java.scrapper.service.TgChatService;
 
-//@Service
 @RequiredArgsConstructor
 public class JdbcTgChatService implements TgChatService {
 

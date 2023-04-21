@@ -22,10 +22,8 @@ import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 
-//@Service
 @RequiredArgsConstructor
 public class JpaLinkService implements LinkService {
-
     private final ClientManager clientManager;
     private final JpaRequestLinkRepository jpaRequestLinkRepository;
     private final JpaRequestClientRepository jpaRequestClientRepository;

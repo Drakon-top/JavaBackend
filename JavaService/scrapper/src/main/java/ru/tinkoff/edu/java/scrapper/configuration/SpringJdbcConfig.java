@@ -48,18 +48,4 @@ public class SpringJdbcConfig {
     public JdbcTemplate getJdbcTemplate() {
         return new JdbcTemplate(getDataSource());
     }
-
-    @Bean
-    public LinkService getLinkService(
-            ClientManager clientManager,
-            JpaRequestClientRepository jpaRequestClientRepository,
-            JpaRequestLinkRepository jpaRequestLinkRepository) {
-        return new JpaLinkService(clientManager, jpaRequestLinkRepository, jpaRequestClientRepository);
-    }
-
-    @Bean
-    public TgChatService getTgChetService(
-            JpaRequestClientRepository jpaRequestClientRepository) {
-        return new JpaTgChatService(jpaRequestClientRepository);
-    }
 }
