@@ -52,7 +52,7 @@ public class JooqLinkService implements LinkService {
     }
 
     @Override
-    public Collection<DataLink> listAll(long tgChatId) {
+    public Collection<DataLink> listLinkAll(long tgChatId) {
         List<DataUserLinks> dataUserLinksList = jooqRequestUserLinks.findUserLinksByUser(tgChatId);
         Set<Long> setLinksId = dataUserLinksList.stream().map(DataUserLinks::getLinksId).collect(Collectors.toSet());
         List<DataLink> dataLinks = jooqRequestLink.findAllLinks();

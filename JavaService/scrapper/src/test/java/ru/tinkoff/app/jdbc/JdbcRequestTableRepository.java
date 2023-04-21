@@ -1,9 +1,10 @@
-package ru.tinkoff.app;
+package ru.tinkoff.app.jdbc;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import ru.tinkoff.app.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestClientRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksRepository;

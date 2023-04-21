@@ -2,6 +2,7 @@ package ru.tinkoff.edu.java.scrapper.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 import ru.tinkoff.edu.java.scrapper.web.client.*;
 
 
@@ -26,5 +27,10 @@ public class ClientConfiguration {
     @Bean
     public long schedulerIntervalMs(ApplicationConfig config) {
         return config.scheduler().interval().toMillis();
+    }
+
+    @Bean
+    public ClientManager getClientManager() {
+        return new ClientManager(getGitHubClient(), getStackOverflowClient());
     }
 }

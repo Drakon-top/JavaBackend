@@ -11,7 +11,7 @@ import java.util.List;
 public interface LinkService {
     DataLink add(long tgChatId, URI url);
     DataLink remove(long tgChatId, URI url);
-    Collection<DataLink> listAll(long tgChatId);
+    Collection<DataLink> listLinkAll(long tgChatId);
     List<DataLinkWithInformation> listLongTimeUpdate();
 
     List<DataUserLinks> findUserLinksByLinks(long idLink);

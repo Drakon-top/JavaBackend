@@ -21,7 +21,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class ClientManager {
 

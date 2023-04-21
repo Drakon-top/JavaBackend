@@ -30,9 +30,9 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.13.2</version>
+        <groupId>org.junit.jupite</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.0.0</version>
         <scope>test</scope>
       </dependency>
 
@@ -82,6 +82,7 @@
         <artifactId>spring-boot-starter-webflux</artifactId>
         <version>3.0.4</version>
       </dependency>
+
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers-bom</artifactId>

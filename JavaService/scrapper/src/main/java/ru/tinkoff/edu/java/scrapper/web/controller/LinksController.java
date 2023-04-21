@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.web.controller;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import ru.tinkoff.edu.java.scrapper.dto.AddLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.LinkResponse;
@@ -10,7 +11,6 @@ import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class LinksController {
 
     @GetMapping(path = "/links", produces = APPLICATION_JSON_VALUE)
     public ListLinkResponse getLinks(@RequestParam("Tg-Chat-Id") long idChat) {
-        Collection<DataLink> dataLinks = linkService.listAll(idChat);
+        Collection<DataLink> dataLinks = linkService.listLinkAll(idChat);
         List<LinkResponse> linkResponses = dataLinks.stream().map(x -> new LinkResponse(x.getId(), x.getUrl().toString())).toList();
         return new ListLinkResponse(linkResponses, linkResponses.size());
     }

@@ -2,6 +2,7 @@ package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.tinkoff.app.ParsingUrlService;
 import ru.tinkoff.app.url.UrlData;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkRepository;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+//@Service
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
 
@@ -55,7 +56,7 @@ public class JdbcLinkService implements LinkService {
     }
 
     @Override
-    public Collection<DataLink> listAll(long tgChatId) {
+    public Collection<DataLink> listLinkAll(long tgChatId) {
         List<DataUserLinks> dataUserLinksList = jdbcRequestUserLinks.findUserLinksByUser(tgChatId);
         Set<Long> setLinksId = dataUserLinksList.stream().map(DataUserLinks::getLinksId).collect(Collectors.toSet());
         List<DataLink> dataLinks = jdbcRequestLink.findAllLinks();

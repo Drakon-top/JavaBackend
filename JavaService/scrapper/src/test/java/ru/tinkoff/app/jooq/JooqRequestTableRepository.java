@@ -1,9 +1,10 @@
-package ru.tinkoff.app;
+package ru.tinkoff.app.jooq;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.tinkoff.app.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.JooqRequestClientRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.JooqRequestLinkRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.JooqRequestUserLinksRepository;

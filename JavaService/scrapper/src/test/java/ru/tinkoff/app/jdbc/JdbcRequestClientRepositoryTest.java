@@ -1,4 +1,4 @@
-package ru.tinkoff.app;
+package ru.tinkoff.app.jdbc;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,15 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUser;
 
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class JooqRequestClientRepositoryTest extends JooqRequestTableRepository {
+public class JdbcRequestClientRepositoryTest extends JdbcRequestTableRepository {
 
-    public JooqRequestClientRepositoryTest() throws URISyntaxException, SQLException {
+    public JdbcRequestClientRepositoryTest() throws URISyntaxException {
         super();
     }
 

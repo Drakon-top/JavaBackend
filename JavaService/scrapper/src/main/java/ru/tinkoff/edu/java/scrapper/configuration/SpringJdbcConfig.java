@@ -8,8 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaRequestClientRepository;
+import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaRequestLinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
+import ru.tinkoff.edu.java.scrapper.service.LinkService;
+import ru.tinkoff.edu.java.scrapper.service.TgChatService;
+import ru.tinkoff.edu.java.scrapper.service.jpa.JpaLinkService;
+import ru.tinkoff.edu.java.scrapper.service.jpa.JpaTgChatService;
+import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 
 import javax.sql.DataSource;
 import java.net.URI;
@@ -40,5 +47,19 @@ public class SpringJdbcConfig {
     @Bean
     public JdbcTemplate getJdbcTemplate() {
         return new JdbcTemplate(getDataSource());
+    }
+
+    @Bean
+    public LinkService getLinkService(
+            ClientManager clientManager,
+            JpaRequestClientRepository jpaRequestClientRepository,
+            JpaRequestLinkRepository jpaRequestLinkRepository) {
+        return new JpaLinkService(clientManager, jpaRequestLinkRepository, jpaRequestClientRepository);
+    }
+
+    @Bean
+    public TgChatService getTgChetService(
+            JpaRequestClientRepository jpaRequestClientRepository) {
+        return new JpaTgChatService(jpaRequestClientRepository);
     }
 }
