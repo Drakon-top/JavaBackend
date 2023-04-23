@@ -5,14 +5,14 @@ springdoc:
 app:
   test: test_key_spring_13qk2kw!
   scheduler:
-    interval: 10000
+    interval: 50000
 
 server:
   port: 8077
 
 spring:
   liquibase:
-    change-log: classpath*:db/migrations/master.xml
+    change-log: db/migrations/master.xml
 
   datasource:
     url: jdbc:postgresql://localhost:5432/scrapper

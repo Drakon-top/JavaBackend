@@ -1,18 +1,21 @@
 package ru.tinkoff.app;
 
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUser;
 
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JdbcRequestClientTest extends JdbcRequestTableTest {
+@SpringBootTest
+public class JooqRequestClientRepositoryTest extends JooqRequestTableRepository {
 
-    public JdbcRequestClientTest() throws URISyntaxException {
+    public JooqRequestClientRepositoryTest() throws URISyntaxException, SQLException {
         super();
     }
 
@@ -55,11 +58,11 @@ public class JdbcRequestClientTest extends JdbcRequestTableTest {
     @Test
     public void findAllUser__addLink_checkedFindThisLink() {
         List<DataUser> listUsersWas = userTable.findAllUsers();
-        assertEquals(listUsersWas.size(), 0);
+        int wawSize = listUsersWas.size();
         userTable.addUser(CHAT_ID, USER_NAME);
 
         List<DataUser> listUsers = userTable.findAllUsers();
-        assertEquals(listUsers.size(), 1);
+        assertEquals(wawSize + 1, listUsers.size());
         DataUser dataUser = listUsers.get(0);
         assertAll(
                 () -> assertNotNull(dataUser),

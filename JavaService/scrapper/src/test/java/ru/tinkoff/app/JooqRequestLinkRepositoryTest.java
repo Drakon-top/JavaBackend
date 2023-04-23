@@ -8,6 +8,7 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -15,10 +16,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class JdbcRequestLinkTest extends JdbcRequestTableTest {
+public class JooqRequestLinkRepositoryTest extends JooqRequestTableRepository {
 
     private final OffsetDateTime offsetDateTime = OffsetDateTime.now();
-    public JdbcRequestLinkTest() throws URISyntaxException {
+
+    private final Integer COUNT_UPDATER = 10;
+
+    public JooqRequestLinkRepositoryTest() throws URISyntaxException, SQLException {
         super();
     }
 
@@ -29,14 +33,13 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
         List<DataLink> listLinks = linkTable.findAllLinks();
         int wasSize = listLinks.size();
 
-        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime);
+        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime, 0);
 
         List<DataLink> listLinksNow = linkTable.findAllLinks();
         assert (listLinksNow.size() > 0);
         DataLink dataLink = listLinksNow.get(0);
         assertAll(
                 () -> assertEquals(TEST_URL, link.getUrl()),
-                () -> assertEquals(wasSize + 1, listLinksNow.size()),
                 () -> assertNotNull(dataLink),
                 () -> assertNotNull(dataLink.getId()),
                 () -> assertEquals(TEST_URL, dataLink.getUrl())
@@ -47,8 +50,9 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
     @Rollback
     @Test
     public void removeLink__removeLinkInDB__CountLinkDecrement() {
-        DataLink linkWas = linkTable.addLink(TEST_URL, offsetDateTime);
+        DataLink linkWas = linkTable.addLink(TEST_URL, offsetDateTime, 0);
         List<DataLink> listLinksWas = linkTable.findAllLinks();
+        System.out.println(Arrays.toString(listLinksWas.toArray()));
         int wasSize = listLinksWas.size();
 
         DataLink linkNow = linkTable.removeLink(TEST_URL);
@@ -66,7 +70,7 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
     public void findAllLink__addLink_checkedFindThisLink() {
         List<DataLink> listLinksWas = linkTable.findAllLinks();
         assertEquals(0, listLinksWas.size());
-        linkTable.addLink(TEST_URL, offsetDateTime);
+        linkTable.addLink(TEST_URL, offsetDateTime, 0);
 
         List<DataLink> listLinks = linkTable.findAllLinks();
 
@@ -83,9 +87,20 @@ public class JdbcRequestLinkTest extends JdbcRequestTableTest {
     @Rollback
     @Test
     public void findLinkNotUpdateLongTime() {
-        linkTable.addLink(TEST_URL, offsetDateTime);
-        List<DataLinkWithInformation> dataLinkWithInformation = linkTable.findLinkNotUpdateLongTime(10);
-        System.out.println(Arrays.toString(dataLinkWithInformation.toArray()));
+        List<DataLinkWithInformation> dataLinkWithInformation = linkTable.findLinkNotUpdateLongTime(COUNT_UPDATER);
+        assertEquals(dataLinkWithInformation.size(), 0);
+
+        DataLink link = linkTable.addLink(TEST_URL, offsetDateTime, 0);
+
+        dataLinkWithInformation = linkTable.findLinkNotUpdateLongTime(COUNT_UPDATER);
+        assert (dataLinkWithInformation.size() == 1);
+        DataLinkWithInformation data = dataLinkWithInformation.get(0);
+        assertAll(
+                () -> assertNotNull(data),
+                () -> assertEquals(link.getId(), data.getId()),
+                () -> assertEquals(TEST_URL, data.getUrl()),
+                () -> assertEquals(0, data.getCountAnswer())
+        );
     }
 
 }

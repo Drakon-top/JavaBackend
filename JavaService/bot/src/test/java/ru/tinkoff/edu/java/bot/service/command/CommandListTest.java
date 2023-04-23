@@ -35,7 +35,7 @@ public class CommandListTest {
     void handle__scrapperClientReturnEmptyList_ReturnSpecialMessage() {
         // given
         ListLinkRequest request = new ListLinkRequest(1296945790L);
-        ListLinkResponse emptyList = new ListLinkResponse(List.of());
+        ListLinkResponse emptyList = new ListLinkResponse(List.of(), 0);
         Update update = gson.fromJson(data, Update.class);
         when(scrapperClient.listTrackedLink(request))
                 .thenReturn(Mono.just(emptyList));
@@ -57,7 +57,7 @@ public class CommandListTest {
     void handle__scrapperClientReturnListUrl_FormatMatches() {
         // given
         ListLinkRequest request = new ListLinkRequest(1296945790L);
-        ListLinkResponse emptyList = new ListLinkResponse(List.of());
+        ListLinkResponse emptyList = new ListLinkResponse(List.of(), 0);
         Update update = gson.fromJson(data, Update.class);
         when(scrapperClient.listTrackedLink(request))
                 .thenReturn(Mono.just(emptyList));

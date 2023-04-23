@@ -2,28 +2,20 @@ package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 import ru.tinkoff.app.ParsingUrlService;
 import ru.tinkoff.app.url.UrlData;
-import ru.tinkoff.app.url.UrlDataGitHub;
-import ru.tinkoff.app.url.UrlDataStackOverflow;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestLinkTable;
-import ru.tinkoff.edu.java.scrapper.domain.JdbcRequestUserLinksTable;
-import ru.tinkoff.edu.java.scrapper.dto.GitHubRepositoryResponse;
-import ru.tinkoff.edu.java.scrapper.dto.StackOverflowQuestionResponse;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkRepository;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksRepository;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
-import ru.tinkoff.edu.java.scrapper.web.client.GitHubClient;
-import ru.tinkoff.edu.java.scrapper.web.client.StackOverflowClient;
+import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,11 +24,10 @@ import java.util.stream.Collectors;
 public class JdbcLinkService implements LinkService {
 
     private static final int COUNT_LINK_LIMIT = 10;
-    private final JdbcRequestLinkTable jdbcRequestLink;
-    private final JdbcRequestUserLinksTable jdbcRequestUserLinks;
-
-    private final GitHubClient gitHubClient;
-    private final StackOverflowClient stackOverflowClient;
+    private final JdbcRequestLinkRepository jdbcRequestLink;
+    private final JdbcRequestUserLinksRepository jdbcRequestUserLinks;
+    
+    private final ClientManager clientManager;
 
 
     @Override
@@ -45,8 +36,9 @@ public class JdbcLinkService implements LinkService {
         if (urlData == null) {
             return null;
         }
-        OffsetDateTime timeEditLast = timeEditLinkForType(urlData);
-        DataLink dataLink = jdbcRequestLink.addLink(url, timeEditLast);
+        OffsetDateTime timeEditLast = clientManager.timeEditLinkForType(urlData);
+        Integer count = clientManager.getCountAnswer(urlData);
+        DataLink dataLink = jdbcRequestLink.addLink(url, timeEditLast, count);
         jdbcRequestUserLinks.addUserLink(tgChatId, dataLink.getId());
         return dataLink;
     }
@@ -80,22 +72,4 @@ public class JdbcLinkService implements LinkService {
         return jdbcRequestUserLinks.findUserLinksByLink(idLink);
     }
 
-
-    private OffsetDateTime timeEditLinkForType(UrlData urlData) {
-        return switch (urlData.getType()) {
-            case GITHUB -> workWithGitHubClient((UrlDataGitHub) urlData);
-            case STACKOVERFLOW -> workWithStackOverflowClient((UrlDataStackOverflow) urlData);
-            default -> null;
-        };
-    }
-
-    private OffsetDateTime workWithGitHubClient(UrlDataGitHub urlData) {
-        Mono<GitHubRepositoryResponse> response = gitHubClient.fetchInfoRepository(urlData.userName(), urlData.repository());
-        return Objects.requireNonNull(response.block()).timeLastUpdate();
-    }
-
-    private OffsetDateTime workWithStackOverflowClient(UrlDataStackOverflow urlData) {
-        Mono<StackOverflowQuestionResponse> response = stackOverflowClient.fetchInfoQuestion(urlData.idQuestion());
-        return Objects.requireNonNull(response.block()).lastEditDate();
-    }
 }
