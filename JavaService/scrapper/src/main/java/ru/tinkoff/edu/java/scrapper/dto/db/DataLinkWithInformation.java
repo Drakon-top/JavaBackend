@@ -15,4 +15,5 @@ public class DataLinkWithInformation {
     private URI url;
     private OffsetDateTime lastUpdate;
     private OffsetDateTime lastEditTime;
+    private Integer countAnswer;
 }

@@ -55,7 +55,6 @@ public class IntegrationEnvironment {
             Liquibase liquibase = new Liquibase("master.xml", resourceAccessor, database);
 
             liquibase.update();
-            System.out.println("make migration -----------------------------------------------------------");
         } catch (SQLException | FileNotFoundException | LiquibaseException e) {
             throw new RuntimeException(e);
         }

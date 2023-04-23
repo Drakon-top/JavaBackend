@@ -27,7 +27,8 @@ services:
       - --password=password
       - update
     volumes:
-      - ./migrations:/liquibase/changelogdocker-compose down -v
+      - ./migrations:/liquibase/changelog\
+      - ./:/liquibase/changelog
     networks:
       - backend
 

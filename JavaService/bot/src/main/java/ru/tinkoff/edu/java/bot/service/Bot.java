@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.BaseRequest;
 import com.pengrad.telegrambot.response.BaseResponse;
+import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface Bot extends UpdatesListener {
 
     @Override
     int process(List<Update> updates);
+
+    void mailingToUsers(LinkUpdateRequest linkUpdateRequest);
 }
