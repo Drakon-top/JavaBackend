@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.configuration;
 
+import org.jooq.DSLContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,22 @@ import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jooq")
 public class JooqAccessConfiguration {
+
+    @Bean
+    public JooqRequestClientRepository getJooqRequestClientRepository(DSLContext dslContext) {
+        return new JooqRequestClientRepository(dslContext);
+    }
+
+    @Bean
+    public JooqRequestLinkRepository getJooqRequestLinkRepository(DSLContext dslContext) {
+        return new JooqRequestLinkRepository(dslContext);
+    }
+
+    @Bean
+    public JooqRequestUserLinksRepository getJooqRequestUserLinksRepository(DSLContext dslContext) {
+        return new JooqRequestUserLinksRepository(dslContext);
+    }
+
     @Bean
     public LinkService getLinkService(
             ClientManager clientManager,

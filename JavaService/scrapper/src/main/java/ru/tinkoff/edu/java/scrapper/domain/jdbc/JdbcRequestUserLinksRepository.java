@@ -9,7 +9,6 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 
 import java.util.List;
 
-@Component
 @RequiredArgsConstructor
 public class JdbcRequestUserLinksRepository {
     private final JdbcTemplate template;

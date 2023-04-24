@@ -6,7 +6,6 @@ import ru.tinkoff.edu.java.scrapper.domain.jpa.entity.LinkEntity;
 
 import java.util.List;
 
-@Repository
 public interface JpaRequestLinkRepository extends JpaRepository<LinkEntity, Long> {
 
     List<LinkEntity> getLinkEntityByUrl(String url);

@@ -1,8 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.domain.jpa.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.OffsetDateTime;
@@ -13,6 +14,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "link")
+@AllArgsConstructor
+@NoArgsConstructor
 public class LinkEntity {
 
     @Id
@@ -35,4 +38,10 @@ public class LinkEntity {
     @ManyToMany(mappedBy = "userLinks")
     private Set<ClientEntity> users = new HashSet<>();
 
+    public LinkEntity(String url, OffsetDateTime lastUpdate, OffsetDateTime lastEditTime, Integer countAnswer) {
+        this.url = url;
+        this.lastEditTime = lastEditTime;
+        this.lastUpdate = lastUpdate;
+        this.countAnswer = countAnswer;
+    }
 }

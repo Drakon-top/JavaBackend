@@ -13,7 +13,6 @@ import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@Component
 @RequiredArgsConstructor
 public class JdbcRequestLinkRepository {
     private final JdbcTemplate template;

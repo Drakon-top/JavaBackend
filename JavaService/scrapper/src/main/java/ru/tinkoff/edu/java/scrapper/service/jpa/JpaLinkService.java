@@ -48,11 +48,7 @@ public class JpaLinkService implements LinkService {
         OffsetDateTime timeEditLast = clientManager.timeEditLinkForType(urlData);
         Integer count = clientManager.getCountAnswer(urlData);
 
-        LinkEntity linkEntity = new LinkEntity();
-        linkEntity.setUrl(url.toString());
-        linkEntity.setLastEditTime(timeEditLast);
-        linkEntity.setCountAnswer(count);
-        linkEntity.setLastUpdate(OffsetDateTime.now());
+        LinkEntity linkEntity = new LinkEntity(url.toString(), OffsetDateTime.now(), timeEditLast, count);
         linkEntity.getUsers().add(client);
         LinkEntity link = jpaRequestLinkRepository.save(linkEntity);
 

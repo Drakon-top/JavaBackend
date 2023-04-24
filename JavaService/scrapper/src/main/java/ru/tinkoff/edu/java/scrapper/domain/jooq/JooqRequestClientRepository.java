@@ -12,7 +12,6 @@ import java.util.List;
 
 import static org.jooq.impl.DSL.count;
 
-@Component
 @RequiredArgsConstructor
 public class JooqRequestClientRepository {
     private final DSLContext dslContext;

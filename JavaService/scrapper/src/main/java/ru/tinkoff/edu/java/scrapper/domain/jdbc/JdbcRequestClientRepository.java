@@ -10,7 +10,6 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataUserWithInfo;
 
 import java.util.List;
 
-@Component
 @RequiredArgsConstructor
 public class JdbcRequestClientRepository {
 
