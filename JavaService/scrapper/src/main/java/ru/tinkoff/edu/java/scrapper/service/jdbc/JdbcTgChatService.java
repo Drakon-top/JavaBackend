@@ -2,12 +2,12 @@ package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestClientRepository;
 import ru.tinkoff.edu.java.scrapper.dto.UserInfoResponse;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserWithInfo;
 import ru.tinkoff.edu.java.scrapper.service.TgChatService;
 
-@Component
 @RequiredArgsConstructor
 public class JdbcTgChatService implements TgChatService {
 

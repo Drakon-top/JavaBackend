@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 import static org.jooq.impl.DSL.count;
 
-@Component
 @RequiredArgsConstructor
 public class JooqRequestLinkRepository {
 

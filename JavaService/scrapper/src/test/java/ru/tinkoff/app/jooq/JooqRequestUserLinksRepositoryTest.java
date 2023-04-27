@@ -1,4 +1,4 @@
-package ru.tinkoff.app;
+package ru.tinkoff.app.jooq;
 
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;

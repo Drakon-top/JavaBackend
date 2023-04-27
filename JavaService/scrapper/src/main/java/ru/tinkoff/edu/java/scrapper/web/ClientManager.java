@@ -21,7 +21,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class ClientManager {
 
@@ -42,7 +42,7 @@ public class ClientManager {
             GitHubRepositoryResponse result = response.block();
             return result.timeLastUpdate();
         } catch (WebClientResponseException | NullPointerException e) {
-            return OffsetDateTime.of(LocalDate.of(2000, 1, 1), LocalTime.of(1, 1, 1), ZoneOffset.ofHours(3));
+            return OffsetDateTime.MIN;
         }
     }
 

@@ -1,4 +1,4 @@
-package ru.tinkoff.app;
+package ru.tinkoff.app.jdbc;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,21 +8,19 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class JooqRequestLinkRepositoryTest extends JooqRequestTableRepository {
+public class JdbcRequestLinkRepositoryTest extends JdbcRequestTableRepository {
 
     private final OffsetDateTime offsetDateTime = OffsetDateTime.now();
 
     private final Integer COUNT_UPDATER = 10;
 
-    public JooqRequestLinkRepositoryTest() throws URISyntaxException, SQLException {
+    public JdbcRequestLinkRepositoryTest() throws URISyntaxException {
         super();
     }
 
@@ -52,7 +50,6 @@ public class JooqRequestLinkRepositoryTest extends JooqRequestTableRepository {
     public void removeLink__removeLinkInDB__CountLinkDecrement() {
         DataLink linkWas = linkTable.addLink(TEST_URL, offsetDateTime, 0);
         List<DataLink> listLinksWas = linkTable.findAllLinks();
-        System.out.println(Arrays.toString(listLinksWas.toArray()));
         int wasSize = listLinksWas.size();
 
         DataLink linkNow = linkTable.removeLink(TEST_URL);
@@ -87,6 +84,7 @@ public class JooqRequestLinkRepositoryTest extends JooqRequestTableRepository {
     @Rollback
     @Test
     public void findLinkNotUpdateLongTime() {
+
         List<DataLinkWithInformation> dataLinkWithInformation = linkTable.findLinkNotUpdateLongTime(COUNT_UPDATER);
         assertEquals(dataLinkWithInformation.size(), 0);
 

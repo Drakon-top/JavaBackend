@@ -11,7 +11,6 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Component
 public class JooqRequestUserLinksRepository {
     private final DSLContext dslContext;
 
