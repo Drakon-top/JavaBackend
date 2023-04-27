@@ -9,6 +9,7 @@ app:
   database-access-type: jpa
   exchange: "message"
   queue: "message.queue"
+  useQueue: true
 
 server:
   port: 8077
