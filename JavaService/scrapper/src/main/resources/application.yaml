@@ -7,6 +7,8 @@ app:
   scheduler:
     interval: 50000
   database-access-type: jpa
+  exchange: "message"
+  queue: "message.queue"
 
 server:
   port: 8077
