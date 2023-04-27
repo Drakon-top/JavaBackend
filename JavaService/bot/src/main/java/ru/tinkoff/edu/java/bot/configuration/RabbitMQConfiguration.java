@@ -17,6 +17,24 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfiguration {
 
     @Bean
+    public Queue queue(ApplicationConfig config) {
+        return QueueBuilder.durable(config.queue() + ".dlq")
+                .withArgument("x-dead-letter-exchange", "")
+                .build();
+    }
+
+    @Bean
+    public DirectExchange exchange(ApplicationConfig config) {
+        return new DirectExchange(config.exchange(), true, false);
+    }
+
+    @Bean
+    public Binding binding(Queue queue, DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).withQueueName();
+    }
+
+
+    @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory("localhost");
         cachingConnectionFactory.setUsername("quest");

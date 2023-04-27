@@ -8,4 +8,5 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull String test, String botToken, String scrapperQueueName) {}
+public record ApplicationConfig(@NotNull String test, String botToken,
+                                String queue, String exchange, String scrapperQueueName) {}

@@ -19,7 +19,9 @@ public class RabbitMQConfiguration {
 
     @Bean
     public Queue queue(ApplicationConfig config) {
-        return new Queue(config.queue());
+        return QueueBuilder.durable(config.queue())
+                .withArgument("x-dead-letter-exchange", config.queue() + ".dlq")
+                .build();
     }
 
     @Bean

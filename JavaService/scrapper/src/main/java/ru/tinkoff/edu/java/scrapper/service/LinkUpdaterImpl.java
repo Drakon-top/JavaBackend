@@ -25,13 +25,6 @@ public class LinkUpdaterImpl implements LinkUpdater {
 
     @Override
     public int update() {
-        try {
-            sendNotification.sendRequest(new LinkUpdateRequest(1L, new URI("https://github.com/person/new_rep/"), "sddd", List.of(1L, 2L)));
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        return 1;
-        /*
         List<DataLinkWithInformation> dataLinkWithInformation = linkService.listLongTimeUpdate();
         int countUpdate = 0;
         for (DataLinkWithInformation data : dataLinkWithInformation) {
@@ -57,6 +50,5 @@ public class LinkUpdaterImpl implements LinkUpdater {
             }
         }
         return countUpdate;
-         */
     }
 }
