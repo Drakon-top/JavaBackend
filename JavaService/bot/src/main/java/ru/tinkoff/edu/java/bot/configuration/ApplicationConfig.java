@@ -2,9 +2,10 @@ package ru.tinkoff.edu.java.bot.configuration;
 
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull String test, String botToken) {}
+public record ApplicationConfig(@NotNull String test, String botToken, String scrapperQueueName) {}

@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.configuration;
+package ru.tinkoff.edu.java.bot.configuration;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -16,27 +16,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class RabbitMQConfiguration {
 
-
-    @Bean
-    public Queue queue(ApplicationConfig config) {
-        return new Queue(config.queue());
-    }
-
-    @Bean
-    public DirectExchange exchange(ApplicationConfig config) {
-        return new DirectExchange(config.exchange(), true, false);
-    }
-
-    @Bean
-    public Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).withQueueName();
-    }
-
-    @Bean
-    public MessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
-
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory("localhost");
@@ -48,12 +27,5 @@ public class RabbitMQConfiguration {
     @Bean
     public AmqpAdmin amqpAdmin() {
         return new RabbitAdmin(connectionFactory());
-    }
-
-    @Bean
-    public RabbitTemplate rabbitTemplate() {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
-        rabbitTemplate.setMessageConverter(jsonMessageConverter());
-        return rabbitTemplate;
     }
 }

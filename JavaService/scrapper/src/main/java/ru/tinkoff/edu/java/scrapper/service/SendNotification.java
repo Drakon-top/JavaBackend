@@ -20,6 +20,7 @@ public class SendNotification {
     }
 
     public void sendRequest(LinkUpdateRequest request) {
+        System.out.println(useQueue);
         if (useQueue) {
             scrapperQueueProducer.send(request);
         } else {
