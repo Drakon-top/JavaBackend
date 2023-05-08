@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class MappingDto {
+public class ConfigurationMapping {
     @Bean
     public ClassMapper classMapper(){
         Map<String, Class<?>> mappings = new HashMap<>();

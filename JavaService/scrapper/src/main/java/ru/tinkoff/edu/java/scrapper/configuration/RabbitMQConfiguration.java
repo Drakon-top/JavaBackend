@@ -8,19 +8,26 @@ import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.tinkoff.edu.java.scrapper.service.rabbitmq.ScrapperQueueProducer;
+import ru.tinkoff.edu.java.scrapper.service.send.SendNotificationService;
+import ru.tinkoff.edu.java.scrapper.service.send.SendNotificationServiceRabbitImpl;
 
 
 @Configuration
 @EnableRabbit
+@ConditionalOnProperty(prefix = "app", name = "useRabbitMQ", havingValue = "true")
 public class RabbitMQConfiguration {
 
-
+    private static final String ARGUMENT_EXCHANGE_DLQ = "x-dead-letter-exchange";
+    private static final String ARGUMENT_ROTING_KEY_DLQ = "x-dead-letter-routing-key";
     @Bean
     public Queue queue(ApplicationConfig config) {
         return QueueBuilder.durable(config.queue())
-                .withArgument("x-dead-letter-exchange", config.queue() + ".dlq")
+                .withArgument(ARGUMENT_EXCHANGE_DLQ, "")
+                .withArgument(ARGUMENT_ROTING_KEY_DLQ, config.exchange() + ".dlq")
                 .build();
     }
 
@@ -57,5 +64,10 @@ public class RabbitMQConfiguration {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
+    }
+
+    @Bean
+    public SendNotificationService getSendNotificationRabbitMQ(ScrapperQueueProducer scrapperQueueProducer) {
+        return new SendNotificationServiceRabbitImpl(scrapperQueueProducer);
     }
 }

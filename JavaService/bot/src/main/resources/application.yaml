@@ -4,3 +4,9 @@ app:
   scrapper-queue-name: "updates.queue"
   exchange: "updates"
   queue: "updates.queue"
+
+spring:
+  rabbitmq:
+    host: localhost
+    password: quest
+    username: quest

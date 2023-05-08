@@ -43,12 +43,10 @@ services:
       - RABBITMQ_DEFAULT_PASS=quest
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/
-      - rabbitmq_log:/var/log/rabbitmq
 
 networks:
   backend:
 
 volumes:
   db-data:
-  rabbitmq_log:
   rabbitmq_data:

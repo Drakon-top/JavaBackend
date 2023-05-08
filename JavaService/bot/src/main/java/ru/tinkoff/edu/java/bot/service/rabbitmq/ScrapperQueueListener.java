@@ -1,8 +1,6 @@
 package ru.tinkoff.edu.java.bot.service.rabbitmq;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -10,9 +8,8 @@ import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.service.Bot;
 
 @Component
-@EnableRabbit
 @RabbitListener(queues = "${app.scrapper-queue-name}")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ScrapperQueueListener {
     private final Bot tgBot;
 

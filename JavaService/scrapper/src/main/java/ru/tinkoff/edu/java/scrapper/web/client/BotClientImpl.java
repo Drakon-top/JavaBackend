@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.web.client;
 
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest;
 
 public class BotClientImpl implements BotClient {
@@ -20,6 +21,7 @@ public class BotClientImpl implements BotClient {
     public void updater(LinkUpdateRequest linkUpdateRequest) {
         webClient.post().uri(uriBuilder -> uriBuilder.path(PATH_LINK_UPDATER).build())
                 .bodyValue(linkUpdateRequest)
-                .retrieve();
+                .exchangeToMono(clientResponse -> Mono.just(!clientResponse.statusCode().isError()))
+                .block();
     }
 }

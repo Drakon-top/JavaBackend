@@ -9,16 +9,16 @@ import ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest;
 public class ScrapperQueueProducer {
 
     private final RabbitTemplate rabbitTemplate;
-    private final String EXCHANGE;
-    private final String ROUTE_KEY;
+    private final String exchange;
+    private final String routeKey;
 
     public ScrapperQueueProducer(RabbitTemplate rabbitTemplate, ApplicationConfig config) {
         this.rabbitTemplate = rabbitTemplate;
-        EXCHANGE = config.exchange();
-        ROUTE_KEY = config.queue();
+        exchange = config.exchange();
+        routeKey = config.queue();
     }
 
     public void send(LinkUpdateRequest update) {
-        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY, update);
+        rabbitTemplate.convertAndSend(exchange, routeKey, update);
     }
 }

@@ -8,6 +8,6 @@ import ru.tinkoff.edu.java.scrapper.web.sheduler.Scheduler;
 
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull String test, Scheduler scheduler, AccessType databaseAccessType,
-                                String queue, String exchange, boolean useQueue) {
+public record ApplicationConfig(@NotNull String test, @NotNull Scheduler scheduler, @NotNull AccessType databaseAccessType,
+                                @NotNull String queue, @NotNull String exchange, @NotNull boolean useRabbitMQ) {
 }

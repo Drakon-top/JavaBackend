@@ -5,9 +5,7 @@ import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,10 +14,18 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class RabbitMQConfiguration {
 
+    @Value("${spring.rabbitmq.host}")
+    private String address;
+    @Value("${spring.rabbitmq.username}")
+    private String userName;
+    @Value("${spring.rabbitmq.password}")
+    private String password;
+    private static final String ARGUMENT_EXCHANGE_DLQ = "x-dead-letter-exchange";
+
     @Bean
     public Queue queue(ApplicationConfig config) {
         return QueueBuilder.durable(config.queue() + ".dlq")
-                .withArgument("x-dead-letter-exchange", "")
+                .withArgument(ARGUMENT_EXCHANGE_DLQ, "")
                 .build();
     }
 
@@ -36,10 +42,11 @@ public class RabbitMQConfiguration {
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory("localhost");
-        cachingConnectionFactory.setUsername("quest");
-        cachingConnectionFactory.setPassword("quest");
-        return cachingConnectionFactory;
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.setAddresses(address);
+        connectionFactory.setUsername(userName);
+        connectionFactory.setPassword(password);
+        return connectionFactory;
     }
 
     @Bean

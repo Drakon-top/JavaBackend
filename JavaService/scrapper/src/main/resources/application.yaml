@@ -9,7 +9,7 @@ app:
   database-access-type: jpa
   exchange: "updates"
   queue: "updates.queue"
-  useQueue: true
+  useRabbitMQ: true
 
 server:
   port: 8077
