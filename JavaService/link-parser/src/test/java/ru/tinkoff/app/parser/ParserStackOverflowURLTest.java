@@ -1,6 +1,5 @@
 package ru.tinkoff.app.parser;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ParserStackOverflowURLTest {
 
     private ParserURL parserStackOverflowURL = new ParserStackOverflowURL();
-    private final String TYPE_URL = "stackoverflow.com";
 
     private final TypeClient typeClient = TypeClient.STACKOVERFLOW;
 
