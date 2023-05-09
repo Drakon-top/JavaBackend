@@ -22,5 +22,6 @@ jobs:
           cache: maven
       - run: ls JavaService
       - run: cd ./JavaService
+      - run: ls
       - name: Maven Package
         run: mvn package -pl JavaService/scrapper -am
