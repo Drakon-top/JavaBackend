@@ -2,7 +2,6 @@ package ru.tinkoff.edu.java.scrapper.domain.jooq;
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.codegen.tables.Client;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUser;
