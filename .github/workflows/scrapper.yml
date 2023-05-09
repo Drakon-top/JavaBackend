@@ -23,4 +23,4 @@ jobs:
       - run: ls JavaService
       - run: ls
       - name: Maven Package
-        run: cd ./JavaService && mvn package -pl scrapper -am
+        run: mvn package -pl scrapper -am
