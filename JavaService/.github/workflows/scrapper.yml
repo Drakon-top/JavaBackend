@@ -5,6 +5,10 @@ on:
     paths:
       - 'scrapper/**'
 
+  pull_request:
+    paths:
+      - 'scrapper/**'
+
 jobs:
   build:
     runs-on: ubuntu-18.04
