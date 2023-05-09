@@ -1,10 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import ru.tinkoff.app.ParsingUrlService;
-import ru.tinkoff.app.url.UrlData;
+import ru.tinkoff.edu.java.linkparser.ParsingUrlService;
+import ru.tinkoff.edu.java.linkparser.url.UrlData;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksRepository;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;

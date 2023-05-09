@@ -1,8 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.service.jooq;
 
 import lombok.RequiredArgsConstructor;
-import ru.tinkoff.app.ParsingUrlService;
-import ru.tinkoff.app.url.UrlData;
+import ru.tinkoff.edu.java.linkparser.ParsingUrlService;
+import ru.tinkoff.edu.java.linkparser.url.UrlData;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.JooqRequestLinkRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.JooqRequestUserLinksRepository;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;

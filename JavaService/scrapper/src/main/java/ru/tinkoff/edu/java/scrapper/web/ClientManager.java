@@ -1,13 +1,12 @@
 package ru.tinkoff.edu.java.scrapper.web;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-import ru.tinkoff.app.enums.TypeClient;
-import ru.tinkoff.app.url.UrlData;
-import ru.tinkoff.app.url.UrlDataGitHub;
-import ru.tinkoff.app.url.UrlDataStackOverflow;
+import ru.tinkoff.edu.java.linkparser.enums.TypeClient;
+import ru.tinkoff.edu.java.linkparser.url.UrlData;
+import ru.tinkoff.edu.java.linkparser.url.UrlDataGitHub;
+import ru.tinkoff.edu.java.linkparser.url.UrlDataStackOverflow;
 import ru.tinkoff.edu.java.scrapper.dto.GitHubCommitsResponse;
 import ru.tinkoff.edu.java.scrapper.dto.GitHubRepositoryResponse;
 import ru.tinkoff.edu.java.scrapper.dto.StackOverflowAnswersResponse;
@@ -15,13 +14,9 @@ import ru.tinkoff.edu.java.scrapper.dto.StackOverflowQuestionResponse;
 import ru.tinkoff.edu.java.scrapper.web.client.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.web.client.StackOverflowClient;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.Objects;
 
-//@Component
 @RequiredArgsConstructor
 public class ClientManager {
 
