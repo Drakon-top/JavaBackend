@@ -9,14 +9,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestClientRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksRepository;
-import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaRequestClientRepository;
-import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaRequestLinkRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.TgChatService;
 import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkService;
 import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcTgChatService;
-import ru.tinkoff.edu.java.scrapper.service.jpa.JpaLinkService;
-import ru.tinkoff.edu.java.scrapper.service.jpa.JpaTgChatService;
 import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 
 import javax.sql.DataSource;
