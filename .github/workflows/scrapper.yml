@@ -20,6 +20,6 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: maven
-      - run: ls
+      - run: ls JavaService
       - name: Maven Package
-        run: mvn package -pl scrapper -am
+        run: mvn package -pl JavaService/scrapper -am
