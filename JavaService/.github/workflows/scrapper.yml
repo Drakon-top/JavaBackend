@@ -1,9 +1,12 @@
 name: build-scrapper
 
+
 on:
   push:
     paths:
       - 'JavaService/scrapper/**'
+  branches:
+    - hw9
 
   pull_request:
     paths:
