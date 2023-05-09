@@ -3,11 +3,11 @@ name: build-scrapper
 on:
   push:
     paths:
-      - 'scrapper/**'
+      - 'JavaService/scrapper/**'
 
   pull_request:
     paths:
-      - 'scrapper/**'
+      - 'JavaService/scrapper/**'
 
 jobs:
   build:
