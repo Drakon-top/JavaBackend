@@ -3,11 +3,11 @@ name: build-scrapper
 on:
   push:
     paths:
-      - 'JavaService/scrapper/**'
+      - 'JavaService/bot/**'
 
   pull_request:
     paths:
-      - 'JavaService/scrapper/**'
+      - 'JavaService/bot/**'
 
 jobs:
   build:
@@ -20,4 +20,4 @@ jobs:
           java-version: 17
       - run: cd .\JavaService\
       - name: Maven Package
-        run: mvn package -pl scrapper -am
+        run: mvn package -pl bot -am
