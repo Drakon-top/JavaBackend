@@ -1,16 +1,23 @@
 name: build-scrapper
 
+#on:
+#  push:
+#    paths:
+#      - 'JavaService/scrapper/**'
+#  branches:
+#    - hw9
+#
+#  pull_request:
+#    paths:
+#      - 'JavaService/scrapper/**'
 
 on:
-  push:
-    paths:
-      - 'JavaService/scrapper/**'
-  branches:
-    - hw9
-
   pull_request:
-    paths:
-      - 'JavaService/scrapper/**'
+    branches:
+      - '*'
+  push:
+    branches:
+      - '*'
 
 jobs:
   build:
