@@ -21,7 +21,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - run: ls JavaService
-      - run: cd ./JavaService
       - run: ls
       - name: Maven Package
         run: cd ./JavaService && mvn package -pl scrapper -am
