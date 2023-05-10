@@ -1,17 +1,12 @@
 package ru.tinkoff.edu.java.scrapper.web.controller;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.tinkoff.edu.java.scrapper.dto.UserInfoResponse;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserWithInfo;
-import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.TgChatService;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-//@Slf4j
 public class ChatsController {
 
     private final TgChatService tgChatService;
