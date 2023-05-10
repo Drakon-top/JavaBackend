@@ -7,6 +7,9 @@ app:
   scheduler:
     interval: 50000
   database-access-type: jpa
+  exchange: "updates"
+  queue: "updates.queue"
+  useRabbitMQ: true
 
 server:
   port: 8077

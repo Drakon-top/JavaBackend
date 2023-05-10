@@ -32,8 +32,21 @@ services:
     networks:
       - backend
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=quest
+      - RABBITMQ_DEFAULT_PASS=quest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+
 networks:
   backend:
 
 volumes:
   db-data:
+  rabbitmq_data:

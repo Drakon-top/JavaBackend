@@ -1,3 +1,12 @@
 app:
   test: "test_key_spring_13qk2kw!"
   bottoken: ${BOT_TOKEN}
+  scrapper-queue-name: "updates.queue"
+  exchange: "updates"
+  queue: "updates.queue"
+
+spring:
+  rabbitmq:
+    host: localhost
+    password: quest
+    username: quest

@@ -28,7 +28,6 @@ public class CommandList extends AbstractCommand {
         Mono<ListLinkResponse> response = client.listTrackedLink(new ListLinkRequest(update.message().chat().id()));
         ListLinkResponse listLinkResponse = response.block();
         if (listLinkResponse != null) {
-            System.out.println(listLinkResponse);
             List<URI> urls = listLinkResponse.links().stream().map(x -> {
                 try {
                     return new URI(x.url());
