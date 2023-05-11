@@ -1,7 +1,13 @@
 package ru.tinkoff.edu.java.bot.web.client;
 
 import reactor.core.publisher.Mono;
-import ru.tinkoff.edu.java.bot.dto.*;
+import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.AddLinkResponse;
+import ru.tinkoff.edu.java.bot.dto.DeleteLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.DeleteLinkResponse;
+import ru.tinkoff.edu.java.bot.dto.ListLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.ListLinkResponse;
+import ru.tinkoff.edu.java.bot.dto.UserGetResponse;
 import ru.tinkoff.edu.java.bot.enums.StateUser;
 
 public interface ScrapperClient {

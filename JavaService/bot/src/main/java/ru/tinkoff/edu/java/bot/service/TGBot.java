@@ -11,19 +11,15 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SetMyCommands;
 import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.SendResponse;
-import org.junit.jupiter.params.aggregator.AggregateWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.dto.UserGetResponse;
-import ru.tinkoff.edu.java.bot.service.command.Command;
 import ru.tinkoff.edu.java.bot.enums.StateUser;
+import ru.tinkoff.edu.java.bot.service.command.Command;
 import ru.tinkoff.edu.java.bot.service.models.User;
 import ru.tinkoff.edu.java.bot.web.client.ScrapperClient;
-
-
-import java.util.List;
 
 @Service
 public class TGBot implements Bot {
@@ -37,7 +33,7 @@ public class TGBot implements Bot {
         bot = new TelegramBot(token);
         bot.setUpdatesListener(this);
         bot.execute(new SetMyCommands(commands.stream().map(x -> new BotCommand(x.command(), x.description()))
-                .toArray(BotCommand[]::new)));
+            .toArray(BotCommand[]::new)));
         this.scrapperClient = scrapperClient;
     }
 
@@ -55,10 +51,11 @@ public class TGBot implements Bot {
         for (Update update : updates) {
             SendMessage request = null;
             Long chatId = update.message().chat().id();
-            if (update.message().entities() != null && update.message().entities()[0].type() == MessageEntity.Type.bot_command) {
+            if (update.message().entities() != null
+                && update.message().entities()[0].type() == MessageEntity.Type.bot_command) {
                 String comm = update.message().text();
                 for (Command command : commands) {
-                    if (command.command().equals(comm) ){
+                    if (command.command().equals(comm)) {
                         request = command.handle(update);
                         execute(request);
                         scrapperClient.updateUser(chatId, command.getState());
@@ -70,16 +67,18 @@ public class TGBot implements Bot {
                 }
             } else {
                 UserGetResponse userGetResponse = scrapperClient.getUser(chatId).block();
-                if (userGetResponse != null) {
-                    User user = new User(userGetResponse.id(), userGetResponse.userName(),
-                            StateUser.valueOf(userGetResponse.userState()));
-                    if (user.userState() != StateUser.NONE) {
-                        for (Command command : commands) {
-                            if (command.getState() == user.userState()) {
-                                request = command.handleWithArgument(update);
-                                execute(request);
-                                break;
-                            }
+                if (userGetResponse == null) {
+                    continue;
+                }
+                User user = new User(userGetResponse.id(), userGetResponse.userName(),
+                    StateUser.valueOf(userGetResponse.userState())
+                );
+                if (user.userState() != StateUser.NONE) {
+                    for (Command command : commands) {
+                        if (command.getState() == user.userState()) {
+                            request = command.handleWithArgument(update);
+                            execute(request);
+                            break;
                         }
                     }
                 }
@@ -92,8 +91,10 @@ public class TGBot implements Bot {
     @Override
     public void mailingToUsers(LinkUpdateRequest linkUpdateRequest) {
         for (Long chatId : linkUpdateRequest.tgChatIds()) {
-            execute(new SendMessage(chatId,
-                    linkUpdateRequest.url() + " update! " + linkUpdateRequest.description()));
+            execute(new SendMessage(
+                chatId,
+                linkUpdateRequest.url() + " update! " + linkUpdateRequest.description()
+            ));
         }
     }
 }
