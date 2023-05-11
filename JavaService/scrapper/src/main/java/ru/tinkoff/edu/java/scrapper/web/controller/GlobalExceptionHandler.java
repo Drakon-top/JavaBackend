@@ -5,10 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
-import ru.tinkoff.edu.java.scrapper.web.controller.LinksController;
 
 @RestControllerAdvice(
-        basePackageClasses = LinksController.class
+    basePackageClasses = LinksController.class
 )
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 

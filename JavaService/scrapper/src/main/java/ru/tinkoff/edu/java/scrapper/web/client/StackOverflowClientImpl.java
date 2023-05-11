@@ -1,26 +1,25 @@
 package ru.tinkoff.edu.java.scrapper.web.client;
 
-import jakarta.validation.groups.Default;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-import reactor.core.publisher.Mono;
-import ru.tinkoff.edu.java.scrapper.dto.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Mono;
+import ru.tinkoff.edu.java.scrapper.dto.StackOverflowAnswersResponse;
+import ru.tinkoff.edu.java.scrapper.dto.StackOverflowQuestionResponse;
+import ru.tinkoff.edu.java.scrapper.dto.StackOverflowQuestionsAllResponse;
 
 public class StackOverflowClientImpl implements StackOverflowClient {
-    private final String BASE_URL = "https://api.stackexchange.com";
-    private final OffsetDateTime DEFAULT_DATE = OffsetDateTime.of(
+    private static final String BASE_URL = "https://api.stackexchange.com";
+    private static final OffsetDateTime DEFAULT_DATE = OffsetDateTime.of(
             LocalDate.of(2000, 1, 1),
             LocalTime.of(1, 1, 1),
             ZoneOffset.ofHours(3));
     private final StackOverflowQuestionResponse resultDefault = new StackOverflowQuestionResponse(DEFAULT_DATE);
-    private final String SITE = "site";
-    private final String SITE_NAME = "stackoverflow";
+    private static final String SITE = "site";
+    private static final String SITE_NAME = "stackoverflow";
     private final WebClient webClient;
 
     public StackOverflowClientImpl() {

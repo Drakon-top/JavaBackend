@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.service;
 
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.linkparser.ParsingUrlService;
@@ -10,8 +12,6 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 import ru.tinkoff.edu.java.scrapper.service.send.SendNotificationService;
 import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 
-import java.time.OffsetDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Component

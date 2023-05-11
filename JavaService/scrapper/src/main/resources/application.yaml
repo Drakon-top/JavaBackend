@@ -30,3 +30,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/scrapper
     username: postgres
     password: password
+
+  rabbitmq:
+    host: localhost
+    password: quest
+    username: quest

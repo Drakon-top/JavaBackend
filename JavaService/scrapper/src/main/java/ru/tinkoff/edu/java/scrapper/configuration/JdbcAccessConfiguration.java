@@ -2,6 +2,7 @@ package ru.tinkoff.edu.java.scrapper.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +15,6 @@ import ru.tinkoff.edu.java.scrapper.service.TgChatService;
 import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkService;
 import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcTgChatService;
 import ru.tinkoff.edu.java.scrapper.web.ClientManager;
-
-import javax.sql.DataSource;
 
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jdbc")
@@ -57,15 +56,17 @@ public class JdbcAccessConfiguration {
 
     @Bean
     public LinkService getLinkService(
-            ClientManager clientManager,
-            JdbcRequestLinkRepository jdbcRequestLinkRepository,
-            JdbcRequestUserLinksRepository jdbcRequestUserLinksRepository) {
+        ClientManager clientManager,
+        JdbcRequestLinkRepository jdbcRequestLinkRepository,
+        JdbcRequestUserLinksRepository jdbcRequestUserLinksRepository
+    ) {
         return new JdbcLinkService(jdbcRequestLinkRepository, jdbcRequestUserLinksRepository, clientManager);
     }
 
     @Bean
     public TgChatService getTgChetService(
-            JdbcRequestClientRepository jdbcRequestClientRepository) {
+        JdbcRequestClientRepository jdbcRequestClientRepository
+    ) {
         return new JdbcTgChatService(jdbcRequestClientRepository);
     }
 }

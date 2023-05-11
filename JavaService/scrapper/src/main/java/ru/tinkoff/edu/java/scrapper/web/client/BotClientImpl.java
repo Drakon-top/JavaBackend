@@ -5,8 +5,8 @@ import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest;
 
 public class BotClientImpl implements BotClient {
-    private final String BASE_URL = "http://localhost:8080";
-    private final String PATH_LINK_UPDATER = "/updater";
+    private static final String BASE_URL = "http://localhost:8080";
+    private static final String PATH_LINK_UPDATER = "/updater";
     private final WebClient webClient;
 
     public BotClientImpl() {

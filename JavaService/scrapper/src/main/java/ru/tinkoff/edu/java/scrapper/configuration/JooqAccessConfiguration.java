@@ -13,7 +13,6 @@ import ru.tinkoff.edu.java.scrapper.service.jooq.JoopTgChatService;
 import ru.tinkoff.edu.java.scrapper.service.jooq.JooqLinkService;
 import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 
-
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jooq")
 public class JooqAccessConfiguration {
@@ -35,15 +34,17 @@ public class JooqAccessConfiguration {
 
     @Bean
     public LinkService getLinkService(
-            ClientManager clientManager,
-            JooqRequestLinkRepository jooqRequestLinkRepository,
-            JooqRequestUserLinksRepository jooqRequestUserLinksRepository) {
+        ClientManager clientManager,
+        JooqRequestLinkRepository jooqRequestLinkRepository,
+        JooqRequestUserLinksRepository jooqRequestUserLinksRepository
+    ) {
         return new JooqLinkService(clientManager, jooqRequestLinkRepository, jooqRequestUserLinksRepository);
     }
 
     @Bean
     public TgChatService getTgChetService(
-            JooqRequestClientRepository jooqRequestClientRepository) {
+        JooqRequestClientRepository jooqRequestClientRepository
+    ) {
         return new JoopTgChatService(jooqRequestClientRepository);
     }
 }
