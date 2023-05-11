@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.web;
 
+import java.time.OffsetDateTime;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
@@ -13,9 +15,6 @@ import ru.tinkoff.edu.java.scrapper.dto.StackOverflowAnswersResponse;
 import ru.tinkoff.edu.java.scrapper.dto.StackOverflowQuestionResponse;
 import ru.tinkoff.edu.java.scrapper.web.client.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.web.client.StackOverflowClient;
-
-import java.time.OffsetDateTime;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 public class ClientManager {
@@ -32,7 +31,8 @@ public class ClientManager {
     }
 
     private OffsetDateTime workWithGitHubClient(UrlDataGitHub urlData) {
-        Mono<GitHubRepositoryResponse> response = gitHubClient.fetchInfoRepository(urlData.userName(), urlData.repository());
+        Mono<GitHubRepositoryResponse> response =
+            gitHubClient.fetchInfoRepository(urlData.userName(), urlData.repository());
         try {
             GitHubRepositoryResponse result = response.block();
             return result.timeLastUpdate();
@@ -66,7 +66,6 @@ public class ClientManager {
         Mono<StackOverflowAnswersResponse> response = stackOverflowClient.fetchAnswersRepository(urlData.idQuestion());
         return Objects.requireNonNull(response.block()).answers().length;
     }
-
 
     public String getInfoCountByType(TypeClient type) {
         return switch (type) {

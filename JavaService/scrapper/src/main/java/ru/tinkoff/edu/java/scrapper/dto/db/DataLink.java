@@ -1,10 +1,10 @@
 package ru.tinkoff.edu.java.scrapper.dto.db;
 
+import java.net.URI;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.net.URI;
 
 @Data
 @AllArgsConstructor

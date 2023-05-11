@@ -1,25 +1,25 @@
 package ru.tinkoff.edu.java.scrapper.domain.jdbc;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
-import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.transaction.annotation.Transactional;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
+
 
 @RequiredArgsConstructor
 public class JdbcRequestLinkRepository {
     private final JdbcTemplate template;
+    private String nameUrl = "url";
     private RowMapper<DataLink> rowMapperDataLink = (rs, rowNum) -> {
         try {
             Long id = rs.getLong("id");
-            String url = rs.getString("url");
+            String url = rs.getString(nameUrl);
             return new DataLink(id, new URI(url));
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
@@ -28,7 +28,7 @@ public class JdbcRequestLinkRepository {
     private RowMapper<DataLinkWithInformation> rowMapperDataLinkWithInfo = (rs, rowNum) -> {
         try {
             Long id = rs.getLong("id");
-            String url = rs.getString("url");
+            String url = rs.getString(nameUrl);
             OffsetDateTime lastUpdate = rs.getObject("last_update", OffsetDateTime.class);
             OffsetDateTime lastEditTime = rs.getObject("last_edit_time", OffsetDateTime.class);
             Integer countAnswer = rs.getObject("count_commit_or_question", Integer.class);

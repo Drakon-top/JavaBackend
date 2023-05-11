@@ -1,8 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaRequestClientRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.entity.ClientEntity;

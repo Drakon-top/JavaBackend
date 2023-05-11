@@ -1,23 +1,21 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
-import lombok.RequiredArgsConstructor;
-import ru.tinkoff.edu.java.linkparser.ParsingUrlService;
-import ru.tinkoff.edu.java.linkparser.url.UrlData;
-import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkRepository;
-import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksRepository;
-import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
-import ru.tinkoff.edu.java.scrapper.service.LinkService;
-import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
-import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
-import ru.tinkoff.edu.java.scrapper.web.ClientManager;
-
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+import lombok.RequiredArgsConstructor;
+import ru.tinkoff.edu.java.linkparser.ParsingUrlService;
+import ru.tinkoff.edu.java.linkparser.url.UrlData;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestLinkRepository;
+import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcRequestUserLinksRepository;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataLink;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
+import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
+import ru.tinkoff.edu.java.scrapper.service.LinkService;
+import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
@@ -25,7 +23,7 @@ public class JdbcLinkService implements LinkService {
     private static final int COUNT_LINK_LIMIT = 10;
     private final JdbcRequestLinkRepository jdbcRequestLink;
     private final JdbcRequestUserLinksRepository jdbcRequestUserLinks;
-    
+
     private final ClientManager clientManager;
 
 

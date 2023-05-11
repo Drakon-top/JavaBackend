@@ -10,7 +10,7 @@ import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
 @Component
 @RequiredArgsConstructor
 public class LinkUpdaterScheduler {
-    private static final Logger log =
+    private final Logger log =
             LoggerFactory.getLogger(LinkUpdaterScheduler.class);
 
     private final LinkUpdater linkUpdaterImpl;

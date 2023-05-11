@@ -1,5 +1,10 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.OffsetDateTime;
+import java.util.Collection;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.linkparser.ParsingUrlService;
@@ -13,12 +18,6 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataLinkWithInformation;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.web.ClientManager;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.OffsetDateTime;
-import java.util.Collection;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JpaLinkService implements LinkService {

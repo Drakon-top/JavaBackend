@@ -1,14 +1,13 @@
 package ru.tinkoff.edu.java.scrapper.domain.jdbc;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUser;
 import ru.tinkoff.edu.java.scrapper.dto.db.DataUserWithInfo;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JdbcRequestClientRepository {

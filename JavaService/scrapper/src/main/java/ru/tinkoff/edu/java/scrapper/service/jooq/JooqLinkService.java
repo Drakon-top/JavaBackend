@@ -1,5 +1,11 @@
 package ru.tinkoff.edu.java.scrapper.service.jooq;
 
+import java.net.URI;
+import java.time.OffsetDateTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import ru.tinkoff.edu.java.linkparser.ParsingUrlService;
 import ru.tinkoff.edu.java.linkparser.url.UrlData;
@@ -11,12 +17,6 @@ import ru.tinkoff.edu.java.scrapper.dto.db.DataUserLinks;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.web.ClientManager;
 
-import java.net.URI;
-import java.time.OffsetDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class JooqLinkService implements LinkService {

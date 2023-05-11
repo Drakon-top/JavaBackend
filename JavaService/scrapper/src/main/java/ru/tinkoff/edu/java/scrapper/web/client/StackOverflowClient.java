@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.web.client;
 
 import reactor.core.publisher.Mono;
-import ru.tinkoff.edu.java.scrapper.dto.GitHubCommitsResponse;
 import ru.tinkoff.edu.java.scrapper.dto.StackOverflowAnswersResponse;
 import ru.tinkoff.edu.java.scrapper.dto.StackOverflowQuestionResponse;
 
