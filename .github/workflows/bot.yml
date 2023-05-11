@@ -50,4 +50,4 @@ jobs:
           cache: maven
 
       - name: Run checks
-        run: mvn -pl JavaService/bot -am checkstyle:check
+        run: cd ./JavaService && mvn -pl bot -am checkstyle:check
