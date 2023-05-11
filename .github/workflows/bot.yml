@@ -5,6 +5,7 @@ on:
     paths:
       - 'JavaService/bot/**'
       - 'JavaService/pom.xml'
+      - 'JavaService/pom.xml'
       - '.github/workflows/bot.yml'
 
 env:
