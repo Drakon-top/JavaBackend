@@ -10,6 +10,7 @@ import ru.tinkoff.edu.java.bot.web.client.ScrapperClient;
 public class CommandStart extends AbstractCommand {
 
     private ScrapperClient client;
+
     public CommandStart(ScrapperClient client) {
         this.client = client;
         informationCommand = InformationCommand.START;

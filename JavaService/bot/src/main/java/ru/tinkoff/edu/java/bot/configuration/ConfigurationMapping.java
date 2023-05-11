@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.java.bot.configuration;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.amqp.support.converter.ClassMapper;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -8,13 +10,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 public class ConfigurationMapping {
     @Bean
-    public ClassMapper classMapper(){
+    public ClassMapper classMapper() {
         Map<String, Class<?>> mappings = new HashMap<>();
         mappings.put("ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest", LinkUpdateRequest.class);
 
@@ -25,7 +25,7 @@ public class ConfigurationMapping {
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter(ClassMapper classMapper){
+    public MessageConverter jsonMessageConverter(ClassMapper classMapper) {
         Jackson2JsonMessageConverter jsonConverter = new Jackson2JsonMessageConverter();
         jsonConverter.setClassMapper(classMapper);
         return jsonConverter;

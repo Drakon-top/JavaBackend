@@ -2,10 +2,9 @@ package ru.tinkoff.edu.java.bot.service.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import java.util.List;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.enums.InformationCommand;
-
-import java.util.List;
 
 @Component
 public class CommandHelp extends AbstractCommand {
@@ -16,6 +15,7 @@ public class CommandHelp extends AbstractCommand {
         this.commands = commands;
         informationCommand = InformationCommand.HELP;
     }
+
     @Override
     public SendMessage handle(Update update) {
         StringBuilder stringBuilder = new StringBuilder();

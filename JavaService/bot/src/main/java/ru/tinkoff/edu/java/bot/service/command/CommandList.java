@@ -2,21 +2,21 @@ package ru.tinkoff.edu.java.bot.service.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
-import ru.tinkoff.edu.java.bot.enums.InformationCommand;
-import ru.tinkoff.edu.java.bot.web.client.ScrapperClient;
-import ru.tinkoff.edu.java.bot.dto.ListLinkRequest;
-import ru.tinkoff.edu.java.bot.dto.ListLinkResponse;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
+import ru.tinkoff.edu.java.bot.dto.ListLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.ListLinkResponse;
+import ru.tinkoff.edu.java.bot.enums.InformationCommand;
+import ru.tinkoff.edu.java.bot.web.client.ScrapperClient;
 
 @Component
 public class CommandList extends AbstractCommand {
 
     private ScrapperClient client;
+
     public CommandList(ScrapperClient client) {
         this.client = client;
         informationCommand = InformationCommand.LIST;
