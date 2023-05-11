@@ -33,4 +33,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Docker push
-        run: docker push JavaService:bot:latest
+        run: docker push javaservice_bot:latest
