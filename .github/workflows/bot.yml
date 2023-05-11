@@ -9,6 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
+  USERNAME: drakon-top
 
 jobs:
   build:
@@ -24,7 +25,7 @@ jobs:
       - name: Maven Package
         run: cd ./JavaService && mvn package -pl bot -am
       - name: Docker Build
-        run: docker build -t $REGISTRY/${{ github.actor }}/bot:latest . -f JavaService/bot/Dockerfile
+        run: docker build -t $REGISTRY/$USERNAME/bot:latest . -f JavaService/bot/Dockerfile
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
