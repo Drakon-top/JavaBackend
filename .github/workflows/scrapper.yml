@@ -7,6 +7,10 @@ on:
       - 'JavaService/link-parser/**'
       - 'JavaService/pom.xml'
       - 'JavaService/scrapper-jooq/**'
+      - '.github/workflows/scrapper.yml'
+env:
+  REGISTRY: ghcr.io
+  USERNAME: drakon-top
 
 jobs:
   build:
@@ -22,6 +26,14 @@ jobs:
       - name: Maven Package
         run: cd ./JavaService && mvn package -pl scrapper -am
       - name: Docker Build
-        run: docker build -t test_name . -f JavaService/scrapper/Dockerfile
-      - name: test
-        run: ls
+        run: docker build -t $REGISTRY/$USERNAME/scrapper:latest . -f JavaService/scrapper/Dockerfile
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker push
+        run: docker push $REGISTRY/$USERNAME/scrapper:latest
