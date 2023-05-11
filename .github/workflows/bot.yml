@@ -21,7 +21,7 @@ jobs:
       - name: Maven Package
         run: cd ./JavaService && mvn package -pl bot -am
       - name: Docker Build
-        run: docker build -t JavaService/bot:latest . -f JavaService/bot/Dockerfile
+        run: docker build -t javaService:bot:latest . -f JavaService/bot/Dockerfile
 
       - name: test
         run: docker images
