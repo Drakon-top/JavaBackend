@@ -4,10 +4,9 @@ on:
   push:
     paths:
       - 'JavaService/scrapper/**'
-
-  pull_request:
-    paths:
-      - 'JavaService/scrapper/**'
+      - 'JavaService/link-parser/**'
+      - 'JavaService/pom.xml'
+      - 'JavaService/scrapper-jooq/**'
 
 jobs:
   build:
@@ -20,7 +19,9 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: maven
-      - run: ls JavaService
-      - run: ls
       - name: Maven Package
         run: cd ./JavaService && mvn package -pl scrapper -am
+      - name: Docker Build
+        run: docker build -t test_name . -f JavaService/scrapper/Dockerfile
+      - name: test
+        run: ls

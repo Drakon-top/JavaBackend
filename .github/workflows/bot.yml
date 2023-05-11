@@ -4,10 +4,7 @@ on:
   push:
     paths:
       - 'JavaService/bot/**'
-
-  pull_request:
-    paths:
-      - 'JavaService/bot/**'
+      - 'JavaService/pom.xml'
 
 jobs:
   build:
@@ -20,7 +17,9 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: maven
-      - run: ls JavaService
-      - run: ls
       - name: Maven Package
         run: cd ./JavaService && mvn package -pl bot -am
+      - name: Docker Build
+        run: docker build -t test_name . -f JavaService/bot/Dockerfile
+      - name: test
+        run: ls
