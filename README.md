@@ -10,4 +10,4 @@
 
 Сервисы общаются между собой как напрямую (по HTTP). Для хранения данных используется СУБД PostgreSQL.
 ## Стек используемых технологий и программ:
-Spring, Docker, PostgreSql, Liquibase, TgBot Api
+Spring, Docker, PostgreSql, Liquibase, TgBot Api, RabbitMQ
